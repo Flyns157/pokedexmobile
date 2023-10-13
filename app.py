@@ -43,7 +43,6 @@ class UserForm(FlaskForm):
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-
     page_form = PageForm()
     if page_form.validate_on_submit():
         location = int(page_form.numero.data)
