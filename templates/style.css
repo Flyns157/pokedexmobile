@@ -6,7 +6,7 @@
     padding: 0;
 }
 
-#HEADER & BARRE DE RECHERCHE
+/*  HEADER ET BARRE DE RECHERCHE */
 
 .header{
     display: flex;
@@ -52,7 +52,7 @@
     padding: 1rem;
 }
 
-#FOOTER
+/* FOOTER */
 
 .row{
 	display: flex;
