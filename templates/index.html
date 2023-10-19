@@ -4,55 +4,93 @@
     <meta charset="UTF-8">
     <title>Say my name !</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-
+    <style>
+      nav {display: flex;flex-direction: row;justify-content: space-between; text-align: center;}
+      ul {display: flex;flex-direction: row;justify-content: space-between;}
+      li {border: solid red;padding: 1vh;}
+    </style>
 </head>
 <body>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="#">
-        <input class="input" type="text" placeholder="Recherche">
-      </a>
-    </div>
-  
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-start">
-        <a class="navbar-item" href="#">
-          Accueil
-        </a>
-  
-        <a class="navbar-item" href="#">
-          Pokémon
-        </a>
-  
-        <a class="navbar-item" href="#">
-          Items
-        </a>
-      </div>
-    </div>
-  
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-primary" href="#">
-            <strong>Login</strong>
-          </a>
-        </div>
-      </div>
-    </div>
-  </nav>  
   <!-- <nav>
+    
+    <div class="control has-icons-left">
+      <input class="input is-rounded" type="text" placeholder="Recherche">
+      <span class="icon is-small is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
+    </div>
     <ul>
       <li><a href="">Accueil</a></li>
       <li><a href="">Pokémon</a></li>
       <li><a href="">Items</a></li>
+      <li><button>Connexion</button></li>
     </ul>
-    <button>Connexion</button>
     <form method="POST" action="/login">
       <input type="text" name="username" placeholder="Nom d'utilisateur" required>
       <input type="password" name="password" placeholder="Mot de passe" required>
       <input type="submit" value="Connexion">
     </form>
   </nav> -->
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+      </a>
+  
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item">
+          Home
+        </a>
+  
+        <a class="navbar-item">
+          Documentation
+        </a>
+  
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More
+          </a>
+  
+          <div class="navbar-dropdown">
+            <a class="navbar-item">
+              About
+            </a>
+            <a class="navbar-item">
+              Jobs
+            </a>
+            <a class="navbar-item">
+              Contact
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item">
+              Report an issue
+            </a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a class="button is-primary">
+              <strong>Sign up</strong>
+            </a>
+            <a class="button is-light">
+              Log in
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
   <header>
     <h1>rgjghre</h1>
     
@@ -65,3 +103,36 @@
   </footer>
 </body>
 </html>
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="#">
+      <input class="input" type="text" placeholder="Recherche">
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="#">
+        Accueil
+      </a>
+
+      <a class="navbar-item" href="#">
+        Pokémon
+      </a>
+
+      <a class="navbar-item" href="#">
+        Items
+      </a>
+    </div>
+  </div>
+
+  <div class="navbar-end">
+    <div class="navbar-item">
+      <div class="buttons">
+        <a class="button is-primary" href="#">
+          <strong>Login</strong>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav> -->
