@@ -1,18 +1,15 @@
-import sqlite3
 from random import random
 import requests as requests
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
 from wtforms import StringField, IntegerField
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, render_template
 
 # Init
 try:
     DEFAULT_KEY_SIZE = 30
     DEFAULT_PAGE = 0
     DEFAULT_PAGE_SIZE = 1
-    DEFAULT_BD = 'users.db'
-    con = sqlite3.connect(DEFAULT_BD, check_same_thread=False)
 
     app = Flask(__name__)
     app.secret_key = "POKEDEX.mobile"
