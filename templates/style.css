@@ -1,8 +1,58 @@
-*{
-	margin:0;
-	padding:0;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 
+* {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
 }
+
+#HEADER & BARRE DE RECHERCHE
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    background-color: blue;
+    margin-bottom: 3rem;
+}
+
+.header img{
+    width: 15rem;
+    margin-left: 5rem;
+}
+
+.navbar{
+    margin-right: 3rem;
+    display: flex;
+    justify-content: right;
+}
+
+.navbar a{
+    color: white;
+    list-style: none;
+    text-decoration: none;
+    margin: 2rem 1.5rem;
+    transition: 0.5s ease;
+}
+
+.navbar a:hover{
+    color: yellow;
+}
+
+.corps form{
+    text-align: center;
+}
+
+.corps form #button_recherche{
+    color: white;
+    background-color: blue;
+    padding: 1rem 2rem;
+}
+
+.corps form #recherche{
+    padding: 1rem;
+}
+
+#FOOTER
 
 .row{
 	display: flex;
