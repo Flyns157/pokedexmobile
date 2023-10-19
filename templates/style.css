@@ -1,0 +1,41 @@
+*{
+	margin:0;
+	padding:0;
+
+}
+
+.row{
+	display: flex;
+}
+ul{
+	list-style: none;
+}
+footer{
+	background-color: #24262b;
+    padding: 50px;
+}
+.footer-col{
+   width: 25%;
+}
+.footer-col h4{
+	font-size: 18px;
+	color:white;
+	margin-bottom: 30px;
+	position: relative;
+}
+.footer-col h4::before{
+	content: '';
+	position: absolute;
+	bottom: -10px;
+	background-color: rgb(68, 125, 247);
+	height: 2px;
+	width: 50px;
+}
+.footer-col ul li:not(:last-child){
+	margin-bottom: 10px;
+}
+.footer-col ul li a{
+	font-size: 16px;
+	text-decoration: none;
+	color: rgb(168, 162, 162);
+}
