@@ -1,12 +1,36 @@
-from flask import Flask
+import sqlite3
+from random import random
+import requests as requests
+from flask_wtf import FlaskForm
+from wtforms.validators import DataRequired
+from wtforms import StringField, IntegerField
+from flask import Flask, request, redirect, url_for, render_template
 
-app = Flask(__name__)
+# Init
+try:
+    DEFAULT_KEY_SIZE = 30
+    DEFAULT_PAGE = 0
+    DEFAULT_PAGE_SIZE = 1
+    DEFAULT_BD = 'users.db'
+    con = sqlite3.connect(DEFAULT_BD, check_same_thread=False)
 
+    app = Flask(__name__)
+    app.secret_key = "POKEDEX.mobile"
+except (RuntimeError, TypeError, NameError):
+    raise Exception(f'''/!\ Can't init the website ...\nRuntimeError : {RuntimeError}\nTypeError : {TypeError}\nNameError : {NameError})''')
 
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
+class PageForm(FlaskForm):
+    numero = StringField('numero', validators=[DataRequired()])
+    size = IntegerField('size', validators=[DataRequired()])
 
-
-if __name__ == '__main__':
-    app.run()
+@app.route("/catalogue", methods=['GET', 'POST'])
+def index():
+    page_form = PageForm()
+    if page_form.validate_on_submit():
+        location = int(page_form.numero.data)
+        nb_pokemon_by_page = int(page_form.size.data)
+    else :
+        location = DEFAULT_PAGE
+        nb_pokemon_by_page = DEFAULT_PAGE_SIZE
+    pokemons = requests.get(f'https://pokeapi.co/api/v2/pokemon/?limit={nb_pokemon_by_page}&offset={location}')
+    return render_template('cataloge.html', pekemons = pokemons.json())
