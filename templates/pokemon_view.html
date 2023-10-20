@@ -15,8 +15,6 @@
             <input type="submit" value="Rechercher" id="button_recherche">
         </form>
     </div>
-    {% endblock %}
-
     <main>
         <h1>{{ poke_infos.name.fr }} ({{ poke_infos.name.en }} / {{ poke_infos.name.jp }})</h1>
         <img src="{{ poke_infos.sprites.regular }}" alt="Image régulière">
@@ -47,18 +45,26 @@
             {% endfor %}
         </ul>
         <h2>Évolution</h2>
-        <ul>
-            {% for evolution in poke_infos.evolution.pre %}
-                <li>{{ evolution.name }} (ID : {{ evolution.pokedexId }}) - Condition : {{ evolution.condition }}</li>
-            {% endfor %}
-        </ul>
-        {% if poke_infos.evolution.mega %}
-            <h3>Méga Évolution</h3>
-            {% for mega in poke_infos.evolution.mega %}
-                <img src="{{ mega.sprites.regular }}" alt="Image régulière de la méga évolution">
-                <img src="{{ mega.sprites.shiny }}" alt="Image shiny de la méga évolution">
-            {% endfor %}
+        {% if poke_infos.evolution.pre or poke_infos.evolution.mega %}
+            {% if poke_infos.evolution.pre %}
+                <ul>
+                    {% for evolution in poke_infos.evolution.pre %}
+                        <li>{{ evolution.name }} (ID : {{ evolution.pokedexId }}) - Condition : {{ evolution.condition }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if poke_infos.evolution.mega %}
+                <h3>Méga Évolution</h3>
+                {% for mega in poke_infos.evolution.mega %}
+                    <img src="{{ mega.sprites.regular }}" alt="Image régulière de la méga évolution">
+                    <img src="{{ mega.sprites.shiny }}" alt="Image shiny de la méga évolution">
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            <h3>Pas de famille !</h3>
         {% endif %}
+    </main>
+    {% endblock %}
 
     {% block footer %}
     {{ super() }}
