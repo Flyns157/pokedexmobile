@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Login Page</title>
+<link rel="stylesheet" href="css/login.css">
+<title> Login Page </title>
 </head>
 <body>
-   
- <h2 class="text" >Poke login</h2>
+  <body>
+    <div class="login-page">
+      <div class="form">
+        <div class="login">
+          <div class="login-header">
+            <h3>Login</h3>
+          </div>
+        </div>
+        <form class="login-form" action="/form_login" method="post">
 
- <h3 class="strong" >{{info}} </h3>
+            <h2 class="text" >Poke Login</h2>
 
-<form action="/form_login" method="post">
+            <h3 class="strong" >{{info}} </h3>
 
-  <strong>Username:</strong> <br>
-  <input type="text" name='username'><br>
+            <input class="txt_field" type="text" value="" placeholder="Username" id="username" />
+            <input class="txt_field" type="password" value="" placeholder="Password" id="password" />
 
-  <strong>Password:</strong><br>
-  <input  type="password" name='password' ><br><br>
-
-  <input  type="submit" value="Login">
-</form>
- 
- 
+            <button value="Login">Submit</button>
+        </form>
+      </div>
+    </div>
+</body>
 </body>
 </html>
