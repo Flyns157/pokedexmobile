@@ -18,24 +18,22 @@
 </head>
 <body>
     <h1>Catalogue Pokémon</h1>
-
-    <form method="POST">
-        {{ page_form.hidden_tag() }}
-        <label for="numero">Numéro de page :</label><br>
-        {{ page_form.numero(size=20) }}<br>
-        <label for="size">Nombre de Pokémon par page :</label><br>
-        {{ page_form.size(size=20) }}<br>
-        <input type="submit" value="Soumettre">
-    </form>
+    {% if form %}
+        <form method="POST" action="{{url}}">
+            {{ form.hidden_tag() }}
+            <label name="numero">Numéro de page :</label><br>
+            {{ form.numero(size=20) }}<br>
+            <label name="size">Nombre de Pokémon par page :</label><br>
+            {{ form.size(size=20) }}<br>
+            <input type="submit" value="Soumettre">
+        </form>
+    {% endif %}
 
     <div class="grid-container">
-    {% for pokemon in pokemons.results %}
-        <div class="grid-item">{{ pokemon.name }}</div>
-    {% endfor %}
+        {% for pokemon_name in pokemons_name %}
+            <div class="grid-item">{{ pokemon_name }}</div>
+        {% endfor %}
     </div>
-
-    <button onclick="window.location.href='{{ url_for('index', numero=location-1 if location > 0 else 0, size=nb_pokemon_by_page) }}'">Page précédente</button>
-    <button onclick="window.location.href='{{ url_for('index', numero=location+1, size=nb_pokemon_by_page) }}'">Page suivante</button>
-
+ <p>{{pokemons_name}}</p>
 </body>
 </html>
