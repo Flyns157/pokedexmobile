@@ -1,24 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
+    {% extends "layout.html" %}
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css">
-    <title>Mobil Pokedex</title>
+    <title>Pokedex mobile</title>
 </head>
 <body>
-    <header class="header">
-        <img src="/img/Pokédex_logo.png" alt="pokedexlogo">
-        <nav class="navbar">
-            <a href="Accueil">Accueil</a>
-            <a href="Login">Login</a>
-        </nav>
-    </header>
-    <div class="corps">
+    {% block header %}
+    {{ super() }}
+        <div class="corps">
         <form action="#">
-            <input type="text" name="nompokemon" id="recherche" placeholder="Pokemon's name">
+            <input type="text" name="nompokemon" id="recherche" placeholder="Nom du pokemon">
             <input type="submit" value="Rechercher" id="button_recherche">
         </form>
     </div>
+    {% endblock %}
+
     <main>
         <h1>{{ poke_infos.name.fr }} ({{ poke_infos.name.en }} / {{ poke_infos.name.jp }})</h1>
         <img src="{{ poke_infos.sprites.regular }}" alt="Image régulière">
@@ -61,32 +59,9 @@
                 <img src="{{ mega.sprites.shiny }}" alt="Image shiny de la méga évolution">
             {% endfor %}
         {% endif %}
-    </body>
-    </html>
-    
-    </main>
-    <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col">
-                        <img src="./img/Pokédex_logo.png" width="80%">
-                    </div>
-                    <div class="footer-col">
-                        <h4>Company</h4>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Our Services</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Language</h4>
-                        <ul>
-                            <li><a href="#">English</a></li>
-                            <li><a href="#">Français</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
+
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
 </body>
 </html>
