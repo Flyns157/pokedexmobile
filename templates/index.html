@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    {% extends "footer.html" %}
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css">
     <title>Pokedex mobile</title>
 </head>
 <body>
-    <header class="header">
-        <img src="/img/Pokédex_logo.png" alt="pokedexlogo">
-        <nav class="navbar">
-            <a href="Accueil">Accueil</a>
-            <a href="Login">Se connecter</a>
-        </nav>
-    </header>
+    {% block header %}
+    {{ super() }}
+    {% endblock %}
+
     <div class="corps">
         <form action="#">
             <input type="text" name="nompokemon" id="recherche" placeholder="Nom du pokemon">
@@ -20,28 +18,9 @@
         </form>
     </div>
 
-    <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col">
-                        <img src="./img/Pokédex_logo.png" width="80%">
-                    </div>
-                    <div class="footer-col">
-                        <h4>Entreprise</h4>
-                        <ul>
-                            <li><a href="#">À propos de nous</a></li>
-                            <li><a href="#">Nos services</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Langages</h4>
-                        <ul>
-                            <li><a href="#">English</a></li>
-                            <li><a href="#">Français</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
+    {% block footer %}
+    {{ super() }}
+    {% endblock %}
+
 </body>
 </html>

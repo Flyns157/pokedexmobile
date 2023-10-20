@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    {% block header %}
+    <header class="header">
+        <img src="/img/Pokédex_logo.png" alt="pokedexlogo">
+        <nav class="navbar">
+            <a href="Accueil">Accueil</a>
+            <a href="Login">Se connecter</a>
+        </nav>
+    </header>
+    {% endblock %}
+
+    {% block footer %}
+    <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col">
+                        <img src="./img/Pokédex_logo.png" width="80%">
+                    </div>
+                    <div class="footer-col">
+                        <h4>Entreprise</h4>
+                        <ul>
+                            <li><a href="#">À propos de nous</a></li>
+                            <li><a href="#">Nos services</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Langages</h4>
+                        <ul>
+                            <li><a href="#">English</a></li>
+                            <li><a href="#">Français</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    {% endblock %}
+
+
+</body>
+</html>
