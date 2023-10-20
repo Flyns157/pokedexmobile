@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Mobil Pokedex</title>
+</head>
+<body>
+    <header class="header">
+        <img src="/img/Pokédex_logo.png" alt="pokedexlogo">
+        <nav class="navbar">
+            <a href="Accueil">Accueil</a>
+            <a href="Login">Login</a>
+        </nav>
+    </header>
+    <div class="corps">
+        <form action="#">
+            <input type="text" name="nompokemon" id="recherche" placeholder="Pokemon's name">
+            <input type="submit" value="Rechercher" id="button_recherche">
+        </form>
+    </div>
+    <main>
+        <h1>{{ poke_infos.name.fr }} ({{ poke_infos.name.en }} / {{ poke_infos.name.jp }})</h1>
+        <img src="{{ poke_infos.sprites.regular }}" alt="Image régulière">
+        <img src="{{ poke_infos.sprites.shiny }}" alt="Image shiny">
+        {% if poke_infos.sprites.gmax %}
+            <img src="{{ poke_infos.sprites.gmax }}" alt="Image G-Max">
+        {% endif %}
+        <h2>Types</h2>
+        {% for type in poke_infos.types %}
+            <img src="{{ type.image }}" alt="{{ type.name }}">
+        {% endfor %}
+        <h2>Talents</h2>
+        <ul>
+            {% for talent in poke_infos.talents %}
+                <li>{{ talent.name }} {% if talent.tc %}(TC){% endif %}</li>
+            {% endfor %}
+        </ul>
+        <h2>Statistiques</h2>
+        <ul>
+            {% for stat, value in poke_infos.stats.items() %}
+                <li>{{ stat }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Résistances</h2>
+        <ul>
+            {% for resistance in poke_infos.resistances %}
+                <li>{{ resistance.name }}: {{ resistance.multiplier }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Évolution</h2>
+        <ul>
+            {% for evolution in poke_infos.evolution.pre %}
+                <li>{{ evolution.name }} (ID : {{ evolution.pokedexId }}) - Condition : {{ evolution.condition }}</li>
+            {% endfor %}
+        </ul>
+        {% if poke_infos.evolution.mega %}
+            <h3>Méga Évolution</h3>
+            {% for mega in poke_infos.evolution.mega %}
+                <img src="{{ mega.sprites.regular }}" alt="Image régulière de la méga évolution">
+                <img src="{{ mega.sprites.shiny }}" alt="Image shiny de la méga évolution">
+            {% endfor %}
+        {% endif %}
+    </body>
+    </html>
+    
+    </main>
+    <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col">
+                        <img src="./img/Pokédex_logo.png" width="80%">
+                    </div>
+                    <div class="footer-col">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Our Services</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Language</h4>
+                        <ul>
+                            <li><a href="#">English</a></li>
+                            <li><a href="#">Français</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+</body>
+</html>
