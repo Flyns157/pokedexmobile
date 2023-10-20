@@ -23,8 +23,10 @@ def hello_world():  # put application's code here
             "From": "adresse[at]domaine[dot]com",
             'Content-type': 'application/json'
         }
-        return requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{poke_name_form.pokemon.data}",headers).json()
-    return render_template('index.html')
+        print('pas flop')
+        return str(requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{poke_name_form.pokemon.data}",headers).json())
+    print('flop')
+    return render_template('index.html', form = poke_name_form)
 
 
 if __name__ == '__main__':
