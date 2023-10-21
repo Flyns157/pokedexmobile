@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 {% extends "layout.html" %}
-<meta charset="UTF-8">
-<link rel="stylesheet" href="css/style.css">
+{% block head %}
 <title>Pokedex</title>
+{% endblock %}
 {% block header %}
 {{ super() }}
 <div class="corps">
@@ -12,8 +12,4 @@
         <input type="submit" value="Rechercher" id="button_recherche">
     </form>
 </div>
-{% endblock %}
-
-{% block footer %}
-{{ super() }}
 {% endblock %}

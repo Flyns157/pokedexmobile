@@ -2,7 +2,9 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+    {% block head %}
+    {% endblock %}
 </head>
 <body>
     {% block header %}
@@ -13,6 +15,9 @@
             <a href="Login">Se connecter</a>
         </nav>
     </header>
+    {% endblock %}
+
+    {% block content %}
     {% endblock %}
 
     {% block footer %}
