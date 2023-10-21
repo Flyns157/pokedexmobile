@@ -38,11 +38,9 @@ def pokemon(name):
 if __name__ == '__main__':
     app.run()
 
-
 num_log = 0
 def log(content : str)-> None:
     global num_log
     num_log += 1
-    file = open('gaza.log','w')
-    file.write(f'({num_log}) {content}')
-    file.close()
+    with open('gaza.log', 'a') as file:
+        file.write(f'({num_log}) {content}\n')
