@@ -34,7 +34,8 @@ def pokemon(name):
         "From": "adresse[at]domaine[dot]com",
         'Content-type': 'application/json'
     }
-    return requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{name}", headers).json()
+    poke_infos = requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{name}",headers).json()
+    return render_template('pokemon_view.html', poke_infos = poke_infos)
 
 if __name__ == '__main__':
     app.run()
