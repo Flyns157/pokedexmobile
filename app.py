@@ -17,11 +17,6 @@ class PokeNameForm(FlaskForm):
 def index():
     poke_name_form = PokeNameForm()
     if poke_name_form.validate_on_submit():
-        headers = {
-            "User-Agent": "RobotPokemon",
-            "From": "adresse[at]domaine[dot]com",
-            'Content-type': 'application/json'
-        }
         return redirect(url_for('pokemon', name=poke_name_form.pokemon.data))
     return render_template('index.html', form = poke_name_form)
 
@@ -33,11 +28,12 @@ def pokemon(name):
         "From": "adresse[at]domaine[dot]com",
         'Content-type': 'application/json'
     }
-    poke_infos = requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{name}",headers)
-    if poke_infos.status_code == 200:
-        return render_template('pokemon_view.html', form = poke_name_form, poke_infos = poke_infos.json())
-    else:
-        return "404 : Pokémon non trouvé"
+    poke_infos = requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{name}",headers).json()
+    if poke_infos['status'] == 404:
+        log(f'404 : {poke_infos['message']}')
+        return f'404 : {poke_infos['message']}'
+    log('')
+    return render_template('pokemon_view.html', form = poke_name_form, poke_infos = poke_infos)
 
 if __name__ == '__main__':
     app.run()
