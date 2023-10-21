@@ -34,6 +34,8 @@ def pokemon(name):
         'Content-type': 'application/json'
     }
     poke_infos = requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{name}",headers).json()
+    if poke_infos.status_code != 200:
+        return "404 : Pokémon non trouvé"
     return render_template('pokemon_view.html', form = poke_name_form, poke_infos = poke_infos)
 
 if __name__ == '__main__':
