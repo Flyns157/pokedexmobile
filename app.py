@@ -30,8 +30,8 @@ def pokemon(name):
     }
     poke_infos = requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{name}",headers).json()
     if poke_infos['status'] == 404:
-        log(f'404 : {poke_infos['message']}')
-        return f'404 : {poke_infos['message']}'
+        log(f'''404 : {poke_infos['message']}''')
+        return f'''404 : {poke_infos['message']}'''
     log('')
     return render_template('pokemon_view.html', form = poke_name_form, poke_infos = poke_infos)
 
