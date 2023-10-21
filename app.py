@@ -4,8 +4,9 @@ from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
 from wtforms import StringField, IntegerField
 import requests
-from datetime import datetime
-import search_engine_v1 as search_engine
+# personnal modules
+import search_engine
+import debug_sys
 
 
 #=============================== INIT ZONE ===============================
@@ -34,32 +35,20 @@ if __name__ == '__main__':
 def index():
     poke_name_form = PokeNameForm()
     if poke_name_form.validate_on_submit():
-        return redirect(url_for('pokemon', name=poke_name_form.pokemon.data))
+        search_result = search_engine.search_result(search_engine.search_engine(poke_name_form.pokemon.data))[0][0]
+        debug_sys.log('SEARCH',f'''{poke_name_form.pokemon.data} => {search_result}''')
+        return redirect(url_for('pokemon_view', id = search_result))
     return render_template('index.html', form = poke_name_form)
 
-@app.route('/<name>')
-def pokemon_view(name):
+@app.route('/<id>')
+def pokemon_view(id):
     poke_name_form = PokeNameForm()
-    search_result = search_engine.search_result(search_engine.search_engine(name))[0][0]
-    poke_infos = requests.get(f"{API_URL}/{search_result}",API_HEADER).json()
-    if poke_infos['status'] == 404:
-        log(f'''404 : {poke_infos['message']} : "/{search_result}"''')
+    poke_infos = requests.get(f"{API_URL}/{id}",API_HEADER).json()
+    debug_sys.log('INFO',str(poke_infos)[:100])
+    try:
+        if poke_infos['status'] == 404:
+            debug_sys.log('404',f'''{poke_infos['message']} : "/{id}"''')
         return f'''404 : {poke_infos['message']}"'''
-    log('')
+    except:
+        pass
     return render_template('pokemon_view.html', form = poke_name_form, poke_infos = poke_infos)
-
-
-#=============================== DEBUG ZONE ===============================
-
-# suppression des logs
-tmp = open('gaza.log', 'w')
-tmp.write('')
-tmp.close()
-
-# gestion des logs
-num_log = 0
-def log(content : str)-> None:
-    global num_log
-    num_log += 1
-    with open('gaza.log', 'a') as file:
-        file.write(f'({num_log}) : {datetime.now()} : {content}\n')
