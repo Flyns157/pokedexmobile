@@ -5,7 +5,7 @@
 {% endblock %}
 {% block header %}
 {{ super() }}
-<div class="corps">
+<div class="corps" style="margin-top: 85px;">
     <form form method="POST" action="/">
         {{ form.csrf_token }}
         {{ form.recherche() }}
@@ -16,8 +16,8 @@
 {% block content %}
 <main>
     <h1>{{ poke_infos.name.fr }} ({{ poke_infos.name.en }} / {{ poke_infos.name.jp }})</h1>
-    <img src="{{ poke_infos.sprites.regular }}" alt="Image régulière">
-    <img src="{{ poke_infos.sprites.shiny }}" alt="Image shiny">
+    <img id="image1" src="{{ poke_infos.sprites.regular }}" alt="Image régulière" onclick="toggleImages()">
+    <img id="image2" class="hidden" src="{{ poke_infos.sprites.shiny }}" alt="Image shiny" onclick="toggleImages()">
     {% if poke_infos.sprites.gmax %}
     <img src="{{ poke_infos.sprites.gmax }}" alt="Image G-Max">
     {% endif %}
@@ -74,4 +74,17 @@
 
 {% block footer %}
 {{ super() }}
+<script>
+    function toggleImages() {
+        var image1 = document.getElementById('image1');
+        var image2 = document.getElementById('image2');
+        if (image1.classList.contains('hidden')) {
+            image1.classList.remove('hidden');
+            image2.classList.add('hidden');
+        } else {
+            image1.classList.add('hidden');
+            image2.classList.remove('hidden');
+        }
+    }
+</script>
 {% endblock %}

@@ -18,6 +18,10 @@ body{
     width: 100%;
 }
 
+.hidden {
+    display: none;
+}
+
 /*  HEADER ET BARRE DE RECHERCHE */
 
 .header{
