@@ -5,9 +5,17 @@ from wtforms.validators import DataRequired
 from wtforms import StringField, IntegerField
 import requests
 from datetime import datetime
+import search_engine_v1 as search_engine
 
 
 #=============================== INIT ZONE ===============================
+API_URL = "https://api-pokemon-fr.vercel.app/api/v1/pokemon"
+API_HEADER = {
+    "User-Agent": "RobotPokemon",
+    "From": "adresse[at]domaine[dot]com",
+    'Content-type': 'application/json'
+}
+
 app = Flask(__name__, static_url_path='',
             static_folder='static',
             template_folder='templates')
@@ -32,14 +40,10 @@ def index():
 @app.route('/<name>')
 def pokemon_view(name):
     poke_name_form = PokeNameForm()
-    headers = {
-        "User-Agent": "RobotPokemon",
-        "From": "adresse[at]domaine[dot]com",
-        'Content-type': 'application/json'
-    }
-    poke_infos = requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{name}",headers).json()
+    search_result = search_engine.search_result(search_engine.search_engine(name))[0][0]
+    poke_infos = requests.get(f"{API_URL}/{search_result}",API_HEADER).json()
     if poke_infos['status'] == 404:
-        log(f'''404 : {poke_infos['message']} : "/{name}"''')
+        log(f'''404 : {poke_infos['message']} : "/{search_result}"''')
         return f'''404 : {poke_infos['message']}"'''
     log('')
     return render_template('pokemon_view.html', form = poke_name_form, poke_infos = poke_infos)
