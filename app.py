@@ -31,17 +31,22 @@ def pokemon(name):
     }
     poke_infos = requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{name}",headers).json()
     if poke_infos['status'] == 404:
-        log(f'''404 : {poke_infos['message']}''')
-        return f'''404 : {poke_infos['message']}'''
+        log(f'''404 : {poke_infos['message']} : "/{name}"''')
+        return f'''404 : {poke_infos['message']}"'''
     log('')
     return render_template('pokemon_view.html', form = poke_name_form, poke_infos = poke_infos)
 
 if __name__ == '__main__':
     app.run()
 
+# suppression des logs
+tmp = open('gaza.log', 'w')
+tmp.write('')
+tmp.close()
+
 num_log = 0
 def log(content : str)-> None:
     global num_log
     num_log += 1
     with open('gaza.log', 'a') as file:
-        file.write(f'({num_log}) : {datetime.now} : {content}\n')
+        file.write(f'({num_log}) : {datetime.now()} : {content}\n')
