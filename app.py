@@ -35,7 +35,7 @@ if __name__ == '__main__':
 def index():
     poke_name_form = SearchForm()
     if poke_name_form.validate_on_submit():
-        search_result = search_engine.search_result(search_engine.search_engine(poke_name_form.pokemon.data))[0][0]
+        search_result = search_engine.search_result(search_engine.search_engine(poke_name_form.recherche.data))[0][0]
         debug_sys.log('SEARCH',f'''{poke_name_form.recherche.data} => {search_result}''')
         return redirect(url_for('pokemon_view', id = search_result))
     return render_template('index.html', form = poke_name_form)
