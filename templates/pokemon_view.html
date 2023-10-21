@@ -55,7 +55,7 @@
     {% if poke_infos.evolution.pre %}
     <ul>
         {% for evolution in poke_infos.evolution.pre %}
-        <li>{{ evolution.name }} (ID : {{ evolution.pokedexId }}) - Condition : {{ evolution.condition }}</li>
+        <li><a href="/{{ evolution.pokedexId }}">{{ evolution.name }} (ID : {{ evolution.pokedexId }})</a> - Condition : {{ evolution.condition }}</li>
         {% endfor %}
     </ul>
     {% endif %}
@@ -67,7 +67,7 @@
     {% endfor %}
     {% endif %}
     {% else %}
-    <h3>Pas de famille !</h3>
+    <h3>Ce pokémon n'est pas le réultat d'une évolution !</h3>
     {% endif %}
 </main>
 {% endblock %}
