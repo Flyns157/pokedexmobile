@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
 from wtforms import StringField, IntegerField
@@ -24,10 +23,18 @@ def hello_world():  # put application's code here
             'Content-type': 'application/json'
         }
         print('pas flop')
-        return str(requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{poke_name_form.pokemon.data}",headers).json())
+        return redirect(url_for('pokemon', name=poke_name_form.pokemon.data))
     print('flop')
     return render_template('index.html', form = poke_name_form)
 
+@app.route('/<name>')
+def pokemon(name):
+    headers = {
+        "User-Agent": "RobotPokemon",
+        "From": "adresse[at]domaine[dot]com",
+        'Content-type': 'application/json'
+    }
+    return requests.get(f"https://api-pokemon-fr.vercel.app/api/v1/pokemon/{name}", headers).json()
 
 if __name__ == '__main__':
     app.run()
