@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
 from wtforms import StringField, IntegerField
 import requests
+from datetime import datetime
 
 app = Flask(__name__, static_url_path='',
             static_folder='static',
@@ -43,4 +44,4 @@ def log(content : str)-> None:
     global num_log
     num_log += 1
     with open('gaza.log', 'a') as file:
-        file.write(f'({num_log}) {content}\n')
+        file.write(f'({num_log}) : {datetime.now} : {content}\n')
