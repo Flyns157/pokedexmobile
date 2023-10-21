@@ -1,25 +1,19 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    {% extends "layout.html" %}
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Pokedex</title>
-</head>
-<body>
-    {% block header %}
-    {{ super() }}
-        <div class="corps">
-            <form form method="POST" action="/">
-                {{ form.csrf_token }}
-                {{ form.pokemon() }}
-                <input type="submit" value="Rechercher" id="button_recherche">
-            </form>
-        </div>
-    {% endblock %}
+{% extends "layout.html" %}
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/style.css">
+<title>Pokedex</title>
+{% block header %}
+{{ super() }}
+<div class="corps">
+    <form form method="POST" action="/">
+        {{ form.csrf_token }}
+        {{ form.pokemon() }}
+        <input type="submit" value="Rechercher" id="button_recherche">
+    </form>
+</div>
+{% endblock %}
 
-    {% block footer %}
-    {{ super() }}
-    {% endblock %}
-</body>
-</html>
+{% block footer %}
+{{ super() }}
+{% endblock %}
