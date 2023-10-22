@@ -1,6 +1,6 @@
-<!DOCTYPE html>
 {% extends "layout.html" %}
 {% block head %}
+{{ super() }}
 <title>Pokédex : {{ poke_infos.name.fr }}</title>
 {% endblock %}
 {% block header %}
@@ -41,21 +41,22 @@
     <table>
         <tr>
             {% for resistance in poke_infos.resistances %}
-            <th>{{ resistance.name }}</li>
-                {% endfor %}
+            <th>{{ resistance.name }}</th>
+            {% endfor %}
         </tr>
         <tr>
             {% for resistance in poke_infos.resistances %}
             <td>{{ resistance.multiplier }}</td>
             {% endfor %}
-            </th>
+        </tr>
     </table>
     <h2>Évolution</h2>
     {% if poke_infos.evolution.pre or poke_infos.evolution.mega %}
     {% if poke_infos.evolution.pre %}
     <ul>
         {% for evolution in poke_infos.evolution.pre %}
-        <li><a href="/{{ evolution.pokedexId }}">{{ evolution.name }} (ID : {{ evolution.pokedexId }})</a> - Condition : {{ evolution.condition }}</li>
+        <li><a href="/{{ evolution.pokedexId }}">{{ evolution.name }} (ID : {{ evolution.pokedexId }})</a> - Condition :
+            {{ evolution.condition }}</li>
         {% endfor %}
     </ul>
     {% endif %}
