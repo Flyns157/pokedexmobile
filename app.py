@@ -69,7 +69,5 @@ def search_test():
 @app.route('/search', methods=['GET'])
 def search():
     query = request.args.get('query')
-    # Ici, vous pouvez implémenter la logique pour obtenir des suggestions de recherche
-    # basées sur la requête. Pour cet exemple, nous allons simplement renvoyer une liste statique.
-    suggestions = search_engine.suggest(query)
+    suggestions = [(name,id,search_engine.get_regular_IMG(id)) for name,id in search_engine.suggest(query)]
     return jsonify(suggestions)
