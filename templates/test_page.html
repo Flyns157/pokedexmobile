@@ -1,29 +1,46 @@
 <!-- Côté client (HTML + jQuery) -->
-<!DOCTYPE html>
-<html>
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body>
-<input type="text" id="search" placeholder="Rechercher...">
-
+{% extends "layout.html" %}
+{% block head %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
+{% block header %}
+{{ super() }}
+<div class="center">
+    <div class="corps">
+        <form form method="POST" action="/fr">
+            {{ form.csrf_token }}
+            <div id="search_zone">
+                {{ form.recherche() }}
+                <div id="suggestions" style="display: none;"></div>
+            </div>
+            <input type="submit" value="Rechercher" id="button_recherche">
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block footer %}
+{{ super() }}
 <script>
-$(document).ready(function(){
-    $('#search').on('input', function() {
-        var query = $(this).val();
-        if (query) {
-            $.ajax({
-                url: '/search',
-                data: { 'query': query },
-                success: function(data) {
-                    // Ici, vous pouvez mettre à jour votre interface utilisateur avec les suggestions de recherche
-                    console.log(data);
-                }
-            });
-        }
+    $(document).ready(function () {
+        $('#recherche').on('input', function () {
+            var query = $(this).val();
+            if (query) {
+                $.ajax({
+                    url: '/search',
+                    data: { 'query': query },
+                    success: function (data) {
+                        var suggestions = $('#suggestions');
+                        suggestions.empty(); // Effacer les anciennes suggestions
+                        for (var i = 0; i < data.length; i++) {
+                            suggestions.append('<p><a href="/fr/' + data[i][1] + '">' + data[i][0] + '</a></p>');
+                        }
+                        suggestions.show(); // Afficher les nouvelles suggestions
+                    }
+                });
+            } else {
+                $('#suggestions').hide(); // Cacher les suggestions si la barre de recherche est vide
+            }
+        });
     });
-});
 </script>
-
-</body>
-</html>
+{% endblock %}
