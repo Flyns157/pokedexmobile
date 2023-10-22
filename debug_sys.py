@@ -1,4 +1,4 @@
-VERSION = 2
+VERSION = 2.2
 #=============================== IMPORTS ZONE ===============================
 from datetime import datetime
 
@@ -35,6 +35,11 @@ def log(type : str, content : str, content_size_limit : int = 150, file : str = 
     """
     global num_log
     num_log += 1
-    with open(f'{file}.log', 'a') as file:
-        file.write(f'({num_log}) : {datetime.now()} : {type} : {content[:content_size_limit]}\n')
+    try:
+        with open(f'{file}.log', 'a', encoding="UTF8") as file:
+            file.write(f'({num_log}) : {datetime.now()} : {type} : {content[:content_size_limit]}\n')
+    except Exception as e:
+        with open(f'{file}.log', 'a', encoding="UTF8") as file:
+            file.write(f'({num_log}) : {datetime.now()} : LOG_ERROR : {e}\n')
+
 
