@@ -17,7 +17,11 @@ body{
     align-items: center;
     height: 88vh;
     width: 100%;
+    background-image: url("/img/index_back.jpg");
+    background-color: #c43434; /* Couleur de secours */
+    background-size: cover;
 }
+
 
 .hidden {
     display: none;
