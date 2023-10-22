@@ -6,7 +6,7 @@
 {% block header %}
 {{ super() }}
 <div class="corps" style="margin-top: 85px;">
-    <form form method="POST" action="/">
+    <form form method="POST" action="/fr">
         {{ form.csrf_token }}
         {{ form.recherche() }}
         <input type="submit" value="Rechercher" id="button_recherche">

@@ -31,8 +31,12 @@ if __name__ == '__main__':
 
 
 #=============================== MAIN ZONE ===============================
-@app.route('/fr', methods=['GET', 'POST'])
+@app.route('/')
 def index():
+    return redirect(url_for('index_fr'))
+
+@app.route('/fr', methods=['GET', 'POST'])
+def index_fr():
     poke_name_form = SearchForm()
     if poke_name_form.validate_on_submit():
         search_result = search_engine.search_result(search_engine.search_engine(poke_name_form.recherche.data))[0][0]
@@ -59,7 +63,8 @@ from flask import request, jsonify
 
 @app.route('/search_test', methods=['GET'])
 def search_test():
-    return render_template('test_page.html')
+    poke_name_form = SearchForm()
+    return render_template('test_page.html', form = poke_name_form)
 
 @app.route('/search', methods=['GET'])
 def search():
