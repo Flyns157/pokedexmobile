@@ -1,0 +1,29 @@
+<!-- Côté client (HTML + jQuery) -->
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<input type="text" id="search" placeholder="Rechercher...">
+
+<script>
+$(document).ready(function(){
+    $('#search').on('input', function() {
+        var query = $(this).val();
+        if (query) {
+            $.ajax({
+                url: '/search',
+                data: { 'query': query },
+                success: function(data) {
+                    // Ici, vous pouvez mettre à jour votre interface utilisateur avec les suggestions de recherche
+                    console.log(data);
+                }
+            });
+        }
+    });
+});
+</script>
+
+</body>
+</html>

@@ -4,7 +4,7 @@
 {{ super() }}
 <div class="center">
     <div class="corps">
-        <form form method="POST" action="/">
+        <form form method="POST" action="/fr">
             {{ form.csrf_token }}
             {{ form.recherche() }}
             <input type="submit" value="Rechercher" id="button_recherche">

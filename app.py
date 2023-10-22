@@ -27,11 +27,11 @@ class SearchForm(FlaskForm):
     recherche = StringField('nom du pokemon', validators=[DataRequired()])
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
 
 #=============================== MAIN ZONE ===============================
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/fr', methods=['GET', 'POST'])
 def index():
     poke_name_form = SearchForm()
     if poke_name_form.validate_on_submit():
@@ -40,7 +40,7 @@ def index():
         return redirect(url_for('pokemon_view', id = search_result))
     return render_template('index.html', form = poke_name_form)
 
-@app.route('/<id>')
+@app.route('/fr/<id>')
 def pokemon_view(id):
     poke_name_form = SearchForm()
     poke_infos = requests.get(f"{API_URL}/{id}",API_HEADER).json()
@@ -52,3 +52,19 @@ def pokemon_view(id):
     except:
         pass
     return render_template('pokemon_view.html', form = poke_name_form, poke_infos = poke_infos)
+
+
+#=============================== TEST ZONE ===============================
+from flask import request, jsonify
+
+@app.route('/search_test', methods=['GET'])
+def search_test():
+    return render_template('test_page.html')
+
+@app.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query')
+    # Ici, vous pouvez implémenter la logique pour obtenir des suggestions de recherche
+    # basées sur la requête. Pour cet exemple, nous allons simplement renvoyer une liste statique.
+    suggestions = search_engine.suggest(query)
+    return jsonify(suggestions)
