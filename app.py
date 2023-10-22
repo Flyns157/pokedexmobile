@@ -48,7 +48,7 @@ def fr():
 def pokemon_view(id):
     poke_name_form = SearchForm()
     poke_infos = requests.get(f"{API_URL}/{id}",API_HEADER).json()
-    debug_sys.log('INFO',str(poke_infos)[:100])
+    debug_sys.log('INFO',str(poke_infos))
     try:
         if poke_infos['status'] == 404:
             debug_sys.log('404',f'''{poke_infos['message']} : "/{id}"''')
@@ -70,4 +70,5 @@ def search_test():
 def search():
     query = request.args.get('query')
     suggestions = [(name,id,search_engine.get_regular_IMG(id)) for name,id in search_engine.suggest(query)]
+    debug_sys.log('SUGGEST', f'query={query} : ' + str(suggestions))
     return jsonify(suggestions)
