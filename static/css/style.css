@@ -11,17 +11,28 @@ body{
     background: red;
 } */
 
-.center {
+.icenter {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 88vh;
     width: 100%;
     background-image: url("/img/index_back.jpg");
     background-color: #c43434; /* Couleur de secours */
     background-size: cover;
+    padding-bottom: 2rem;
+    height: 88vh;
 }
 
+.pvcenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-image: url("/img/index_back.jpg");
+    background-color: #c43434; /* Couleur de secours */
+    background-size: cover;
+    padding-bottom: 2rem;
+}
 
 .hidden {
     display: none;
@@ -64,6 +75,7 @@ body{
     color: yellow;
 }
 
+
 .corps form{
     text-align: center;
     display: flex;
@@ -71,7 +83,7 @@ body{
 }
 
 .corps form *{
-    margin: 10px;
+    margin: 2rem 10px;
 }
 
 .corps form #button_recherche{
@@ -82,11 +94,16 @@ body{
 }
 
 .corps form #recherche{
+    font-size: 2rem;
 	padding: 0px 1rem;
     width: 30vw;
     height: 3rem;
     box-sizing: border-box;
-	margin: 0px;
+	margin-right: 20px;
+}
+
+.icenter .corps form #recherche {
+    margin-top: 0px;
 }
 
 .corp form #search_zone {
@@ -103,7 +120,7 @@ body{
 #suggestions a {
 	color: black;
 	display: flex;
-	justify-content: flex-star
+	justify-content: flex-star;
 	text-align: left;
 	border: 1px solid black;
 	padding: 0px 1rem;
@@ -111,13 +128,23 @@ body{
 	background: lightblue;
 	
 }
+
 #suggestions a img {
 	height: 2rem;
 	margin: 2px;
 	padding: 0px;
 }
+
 #suggestions a p {
 	margin: 10px;
+}
+
+body .corps form{
+    width: 100%;
+}
+
+.pvcenter .corps #recherche{
+    width: 80vw;
 }
 
 /* FOOTER */
