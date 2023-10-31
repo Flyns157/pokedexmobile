@@ -213,6 +213,11 @@ App
       margin: 10px;
     }
   }
+
+  
+  &:hover {
+    visibility: visible;
+  }
 }
 
 #search-zone:hover #suggestions {
