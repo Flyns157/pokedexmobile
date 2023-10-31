@@ -24,7 +24,7 @@ App
   display: flex;
   flex-direction: column;
   min-height: 40px;
-  height: auto;
+  height: 40px;
   //===================
   width: 350px;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
@@ -32,6 +32,10 @@ App
   background-color: #fff;
   transition: all 0.3s ease;
 
+  &:hover {
+    height: auto;
+  }
+  
   &.focus {
     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
   }
@@ -180,6 +184,7 @@ App
 #suggestions {
   margin: 0;
   padding: 0;
+  visibility: hidden;
 
   a {
     border-radius: 0;
@@ -190,7 +195,7 @@ App
     justify-content: flex-star;
     text-align: left;
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
-    padding: 13px 2rem;
+    padding: 0 2rem;
 
     &:hover {
       background: #efefef;
@@ -204,7 +209,12 @@ App
     }
 
     p {
+      padding: 4px 0;
       margin: 10px;
     }
   }
+}
+
+#search-zone:hover #suggestions {
+  visibility: visible;
 }
