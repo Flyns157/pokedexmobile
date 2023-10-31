@@ -33,7 +33,9 @@ if __name__ == '__main__':
 #=============================== MAIN ZONE ===============================
 @app.route('/')
 def index():
-    return redirect(url_for('fr'))
+    #return redirect(url_for('fr'))
+    poke_name_form = SearchForm()
+    return render_template('test_page.html', form = poke_name_form)
 
 @app.route('/fr', methods=['GET', 'POST'])
 def fr():
