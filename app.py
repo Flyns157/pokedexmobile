@@ -16,6 +16,7 @@ API_HEADER = {
     "From": "adresse[at]domaine[dot]com",
     'Content-type': 'application/json'
 }
+MAX_SUGGESTION = 6
 
 app = Flask(__name__, static_url_path='',
             static_folder='static',
@@ -33,15 +34,13 @@ if __name__ == '__main__':
 #=============================== MAIN ZONE ===============================
 @app.route('/')
 def index():
-    #return redirect(url_for('fr'))
-    poke_name_form = SearchForm()
-    return render_template('test_page.html', form = poke_name_form)
+    return redirect(url_for('fr'))
 
 @app.route('/fr', methods=['GET', 'POST'])
 def fr():
     poke_name_form = SearchForm()
     if poke_name_form.validate_on_submit():
-        search_result = search_engine.search_result(search_engine.search_engine(poke_name_form.recherche.data))[0][0]
+        search_result = search_engine.search(poke_name_form.recherche.data,'fr')[0]
         debug_sys.log('SEARCH',f'''{poke_name_form.recherche.data} => {search_result}''')
         return redirect(url_for('pokemon_view', id = search_result))
     return render_template('index.html', form = poke_name_form)
@@ -71,6 +70,6 @@ def search_test():
 @app.route('/search', methods=['GET'])
 def search():
     query = request.args.get('query')
-    suggestions = [(name,id,search_engine.get_regular_IMG(id)) for name,id in search_engine.suggest(query)]
+    suggestions = [(name,id,search_engine.infos_on(id)['sprites']['regular']) for name,id in search_engine.search(query,'fr')]
     debug_sys.log('SUGGEST', f'query={query} : ' + str(suggestions))
     return jsonify(suggestions)
