@@ -1,4 +1,4 @@
-VERSION = 2.2
+VERSION = 2.3
 
 #=============================== IMPORTS ZONE ===============================
 import requests
@@ -55,7 +55,7 @@ def search(input : str, language : str, url : str = API_URL, headers : str = API
                 if ratio >= p:
                     results[pokemon['pokedexId']] = ratio
         # Sorting
-        return sorted(results.items(), key=lambda x: x[-1], reverse=True)
+        return [id for id, ratio in sorted(results.items(), key=lambda x: x[-1], reverse=True)]
 
 def infos_on(pokedexId : int, url : str = API_URL, headers : str = API_HEADER)-> dict :
     """
