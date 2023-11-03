@@ -1,4 +1,4 @@
-VERSION = 2.3
+VERSION = 2.4
 
 #=============================== IMPORTS ZONE ===============================
 import requests
@@ -43,19 +43,21 @@ def search(input : str, language : str, url : str = API_URL, headers : str = API
     if response.status_code != 200:
         debug_sys.log('ERROR', f"La requête a échoué avec le code d'état: {response.status_code}")
     # Search
-    if requests.get(url, headers).status_code == 200 :
-        return [int(input)]
-    else :
-        # Comparison
-        results = {}
-        for pokemon in response.json():
-            if language in pokemon['name']:
-                name = pokemon['name'][language]
-                ratio = fuzz.ratio(input.lower(), name.lower())
-                if ratio >= p:
-                    results[pokemon['pokedexId']] = ratio
-        # Sorting
-        return [id for id, ratio in sorted(results.items(), key=lambda x: x[-1], reverse=True)]
+    try:
+        if requests.get(url, headers).status_code == 200 :
+            return [int(input)]
+    except :
+        pass
+    # Comparison
+    results = {}
+    for pokemon in response.json():
+        if language in pokemon['name']:
+            name = pokemon['name'][language]
+            ratio = fuzz.ratio(input.lower(), name.lower())
+            if ratio >= p:
+                results[pokemon['pokedexId']] = ratio
+    # Sorting
+    return [id for id, ratio in sorted(results.items(), key=lambda x: x[-1], reverse=True)]
 
 def infos_on(pokedexId : int, url : str = API_URL, headers : str = API_HEADER)-> dict :
     """
