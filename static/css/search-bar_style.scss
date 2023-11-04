@@ -9,7 +9,6 @@ Search
   flex-direction: column;
   min-height: 40px;
   height: 40px;
-  width: 350px;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   border-radius: 20px;
   background-color: #fff;
@@ -27,8 +26,9 @@ Search
 .search-form {
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   position: relative;
-  width: 350px;
   height: 40px;
+  min-width: 350px;
+  width: 30vw;
   border-radius: 40px;
   background: #fff;
   transition: all 0.3s ease;
@@ -41,7 +41,8 @@ Search
   font-size: 14px;
   background: none;
   color: #5a6674;
-  width: 195px;
+  width: calc(30vw - 100px);
+  min-width: 195px;
   height: 20px;
   border: none;
   appearance: none;
