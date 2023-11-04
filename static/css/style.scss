@@ -17,9 +17,9 @@
     padding-bottom: 2rem;
 }
 
-.icenter {
-    height: 80vh;
-}
+// .icenter {
+//     height: 70vh;
+// }
 
 .hidden {
     display: none;
@@ -58,7 +58,8 @@
         text-decoration: none;
         margin: 2rem 1.5rem;
         transition: 0.5s ease;
-        // width: 90px;
+        width: 90px;
+        height: 20px;
         padding: 0 10px;
         white-space: nowrap;
 
@@ -157,31 +158,5 @@ footer{
 
     img {
         max-width: 250px;
-    }
-}
-
-#suggestions a {
-	color: black;
-	display: flex;
-	justify-content: flex-star;
-	text-align: left;
-	border: 1px solid black;
-	padding: 0px 1rem;
-	margin: 1px;
-	background: lightblue;
-
-    &:hover {
-	    background: red;
-	    color: white;
-    }
-
-    img {
-	    height: 2rem;
-	    margin: 2px;
-	    padding: 0px;
-    }
-
-    p {
-	    margin: 10px;
     }
 }

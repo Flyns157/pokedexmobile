@@ -1,31 +1,13 @@
-/*--------------------
-Body
---------------------*/
-
 $color: #e24040;
 
-body {
-  margin: 0;  
-  background: #DEDEDE;
-  color: #5a6674;
-  font-size: 13px;
-  font-family: 'Roboto', sans-serif;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-
 /*--------------------
-App
+Search
 --------------------*/
 #search-zone {
   // overflow: hidden;
   display: flex;
   flex-direction: column;
   min-height: 40px;
-  height: 40px;
-  //===================
   width: 350px;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   border-radius: 20px;
@@ -176,11 +158,11 @@ App
       }
     }
   }
-
-
 }
 
-// my
+/*--------------------
+Suggestions
+--------------------*/
 #suggestions {
   margin: 0;
   padding: 0;
@@ -214,7 +196,6 @@ App
     }
   }
 
-  
   &:hover {
     visibility: visible;
   }
