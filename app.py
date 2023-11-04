@@ -70,6 +70,9 @@ def search_test():
 @app.route('/search', methods=['GET'])
 def search():
     query = request.args.get('query')
-    suggestions = [(name,id,search_engine.infos_on(id)['sprites']['regular']) for name,id in search_engine.search(query,'fr')]
+    suggestions = []
+    for id in search_engine.search(query,'fr')[:MAX_SUGGESTION]:
+        information = search_engine.infos_on(id)
+        suggestions.append((information['name']['fr'],id,information['sprites']['regular']))
     debug_sys.log('SUGGEST', f'query={query} : ' + str(suggestions))
     return jsonify(suggestions)
