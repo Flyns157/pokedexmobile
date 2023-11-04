@@ -1,4 +1,4 @@
-VERSION = 2.5
+VERSION = 2.6
 
 #=============================== IMPORTS ZONE ===============================
 import requests
@@ -21,7 +21,7 @@ API_HEADER = {
 LANGUAGE_SUPPORT = ["fr", "en", "jp", "all"]
 # Network usage mode
 ECO : bool = True
-TMP = response = requests.get(API_URL, API_HEADER)
+TMP = requests.get(API_URL, API_HEADER)
 
 #=============================== MAIN ZONE ===============================
 def search(input : str, language : str, url : str = API_URL, headers : str = API_HEADER, p : int = 50)-> list[int]:
@@ -82,8 +82,8 @@ def infos_on(pokedexId : int, url : str = API_URL, headers : str = API_HEADER)->
     """
     if ECO :
         try :
-            response = TMP.json()[pokedexId]
             debug_sys.log('INFO', f'Information request for N°{pokedexId} in ECO mode.')
+            return TMP.json()[pokedexId]
         except :
             debug_sys.log('ERROR', f'Information request for N°{pokedexId} failed because not listed.')
     else :
