@@ -1,13 +1,40 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="/img/pokemon-aller.png">
-    <link rel="stylesheet" href="/css/CSS-test/CSS.css">
-    <title>Pokédex</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="/css/alt_style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#recherche').on('input', function () {
+            var query = $(this).val();
+            if (query) {
+                $.ajax({
+                    url: '/search',
+                    data: { 'query': query },
+                    success: function (data) {
+                        var suggestions = $('#suggestions');
+                        suggestions.empty(); // Effacer les anciennes suggestions
+                        for (var i = 0; i < data.length; i++) {
+                            suggestions.append('<a href="/fr/' + data[i][1] + '"><img src="' + data[i][2] + '" alt="' + data[i][0] + ' preview"><p>' + data[i][0] + '</p></a>');
+                        }
+                        suggestions.show(); // Afficher les nouvelles suggestions
+                    }
+                });
+            } else {
+                $('#suggestions').hide(); // Cacher les suggestions si la barre de recherche est vide
+            }
+        });
+    });
+</script>
+<script>$('.search-input').focus(function () {
+        $(this).parent().addClass('focus');
+    }).blur(function () {
+        $(this).parent().removeClass('focus');
+    })
+</script>
+{% endblock %}
+{% block header %}
+{{ super() }}
+<div class="icenter" style="height: 88vh;">
     <!--SEE : https://codepen.io/supah/pen/XdKMJK-->
     <div id="search-zone">
         <form class="search-form" form method="POST" action="/fr">
@@ -79,33 +106,8 @@
             </g>
         </symbol>
     </svg>
-</body>
-<script>
-    $(document).ready(function () {
-        $('#recherche').on('input', function () {
-            var query = $(this).val();
-            if (query) {
-                $.ajax({
-                    url: '/search',
-                    data: { 'query': query },
-                    success: function (data) {
-                        var suggestions = $('#suggestions');
-                        suggestions.empty(); // Effacer les anciennes suggestions
-                        for (var i = 0; i < data.length; i++) {
-                            suggestions.append('<a href="/fr/' + data[i][1] + '"><img src="' + data[i][2] + '" alt="' + data[i][0] + ' preview"><p>' + data[i][0] + '</p></a>');
-                        }
-                        suggestions.show(); // Afficher les nouvelles suggestions
-                    }
-                });
-            } else {
-                $('#suggestions').hide(); // Cacher les suggestions si la barre de recherche est vide
-            }
-        });
-    });
-</script>
-<script>$('.search-input').focus(function () {
-        $(this).parent().addClass('focus');
-    }).blur(function () {
-        $(this).parent().removeClass('focus');
-    })</script>
-</html>
+</div>
+{% endblock %}
+{% block footer %}
+{{ super() }}
+{% endblock %}
