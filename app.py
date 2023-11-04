@@ -6,6 +6,7 @@ from wtforms import StringField, IntegerField
 import requests
 # personnal modules
 import search_engine
+search_engine.ECO = True
 import debug_sys
 
 
