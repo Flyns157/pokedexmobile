@@ -11,15 +11,14 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-image: url("/img/index_back.jpg");
-    background-color: #c43434; /* Couleur de secours */
+    background-image: linear-gradient(#fe9601, #ffcb01), url("/img/index_back4.jpg"); /* avec couleurs de secours */
     background-size: cover;
     padding-bottom: 2rem;
 }
 
-// .icenter {
-//     height: 70vh;
-// }
+.icenter {
+    height: 100vh;
+}
 
 .hidden {
     display: none;
@@ -64,7 +63,8 @@
         white-space: nowrap;
 
         &:hover{
-            color: yellow;
+            font-size: 20px;
+            color: #ffcb01;
             font-weight: bold;
             box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
         }
