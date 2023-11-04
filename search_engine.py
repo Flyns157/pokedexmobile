@@ -1,4 +1,4 @@
-VERSION = 2.4
+VERSION = 2.5
 
 #=============================== IMPORTS ZONE ===============================
 import requests
@@ -19,6 +19,9 @@ API_HEADER = {
     'Content-type': 'application/json'
 }
 LANGUAGE_SUPPORT = ["fr", "en", "jp", "all"]
+# Network usage mode
+ECO : bool = True
+TMP = response = requests.get(API_URL, API_HEADER)
 
 #=============================== MAIN ZONE ===============================
 def search(input : str, language : str, url : str = API_URL, headers : str = API_HEADER, p : int = 50)-> list[int]:
@@ -38,10 +41,15 @@ def search(input : str, language : str, url : str = API_URL, headers : str = API
     # Checking the validity of arguments
     if language not in LANGUAGE_SUPPORT :
         debug_sys.log('INFO',f'Unsupported language "{language}+".')
-    # Request data from API
-    response = requests.get(url, headers)
-    if response.status_code != 200:
-        debug_sys.log('ERROR', f"La requête a échoué avec le code d'état: {response.status_code}")
+    language = LANGUAGE_SUPPORT[:-1] if language == 'all' else [language]
+    # Request data from API if not in ECO mode
+    if ECO :
+        response = TMP
+        debug_sys.log('INFO', f'Request for "{input}" in ECO mode.')
+    else :
+        response = requests.get(url, headers)
+        if response.status_code != 200:
+            debug_sys.log('ERROR', f"The request failed with the status code: {response.status_code}")
     # Search
     try:
         if requests.get(url, headers).status_code == 200 :
@@ -51,11 +59,12 @@ def search(input : str, language : str, url : str = API_URL, headers : str = API
     # Comparison
     results = {}
     for pokemon in response.json():
-        if language in pokemon['name']:
-            name = pokemon['name'][language]
-            ratio = fuzz.ratio(input.lower(), name.lower())
-            if ratio >= p:
-                results[pokemon['pokedexId']] = ratio
+        for lang in language :
+            if lang in pokemon['name']:
+                name = pokemon['name'][lang]
+                ratio = fuzz.ratio(input.lower(), name.lower())
+                if ratio >= p:
+                    results[pokemon['pokedexId']] = ratio
     # Sorting
     return [id for id, ratio in sorted(results.items(), key=lambda x: x[-1], reverse=True)]
 
@@ -71,8 +80,15 @@ def infos_on(pokedexId : int, url : str = API_URL, headers : str = API_HEADER)->
     Returns:
     dict: A dictionary containing information about the Pokemon.
     """
-    response = requests.get(f"{url}/{pokedexId}", headers=headers)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        debug_sys.log('INFO', f"La requête a échoué avec le code d'état: {response.status_code}")
+    if ECO :
+        try :
+            response = TMP.json()[pokedexId]
+            debug_sys.log('INFO', f'Information request for N°{pokedexId} in ECO mode.')
+        except :
+            debug_sys.log('ERROR', f'Information request for N°{pokedexId} failed because not listed.')
+    else :
+        response = requests.get(f"{url}/{pokedexId}", headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            debug_sys.log('ERROR', f"The request failed with the status code: {response.status_code}")
