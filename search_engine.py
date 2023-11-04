@@ -1,4 +1,4 @@
-VERSION = 2.61
+VERSION = 2.62
 
 #=============================== IMPORTS ZONE ===============================
 import requests
@@ -92,3 +92,4 @@ def infos_on(pokedexId : int, url : str = API_URL, headers : str = API_HEADER)->
             return response.json()
         else:
             debug_sys.log('404 ERROR', f'''The request failed with the status code: {response.status_code} | {response.json()['message']} : "/{pokedexId}"''',1000)
+            return response.json()
