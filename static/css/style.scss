@@ -6,18 +6,29 @@
     padding: 0;
 }
 
-.icenter, .pvcenter {
+.icenter, .pvcenter, .pvcenterin {
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
     width: 100%;
-    background-image: linear-gradient(#fe9601, #ffcb01), url("/img/index_back4.jpg"); /* avec couleurs de secours */
     background-size: cover;
-    padding-bottom: 2rem;
+}
+
+.pvcenterin {
+    position: fixed;
+    top: 60px;
+    z-index: 10;
 }
 
 .icenter {
+    align-items: center;
+    background-image: url("/img/index_back4.jpg");
+    // background: linear-gradient(#fe9601, #ffcb01);
     height: 100vh;
+}
+
+.pvcenter {
+    justify-content: flex-start;
 }
 
 .hidden {
@@ -31,7 +42,7 @@
     top: 0;
     width: 100%;
     height: 70px;
-    z-index: 1000;
+    z-index: 5;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -40,6 +51,7 @@
     img{
         width: 18rem;
         margin: 1rem 1rem 1rem 5rem;
+        z-index: 1000;
     }
 }
 
@@ -160,5 +172,47 @@ footer{
 
     img {
         max-width: 250px;
+    }
+}
+
+/* Pokémon view */
+.images, .data, .datasheet {
+    border: solid black 5px;
+}
+.datasheet {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    background-color: #e31515;
+    margin: 120px 30px 30px 30px;
+    padding: 10px;
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px 0;
+    div {
+        border-radius: 20px;
+        padding: 5px;
+        overflow: hidden;
+        .statcolor {
+        background: linear-gradient(to right, red, #fe9601, #ffcb01, #9de63a);
+        }
+    }
+    td {
+        &:first-child {
+            width: 150px;
+        }
+        &:nth-child(2) {
+            width: 300px;
+        }
     }
 }

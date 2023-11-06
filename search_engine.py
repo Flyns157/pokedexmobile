@@ -1,4 +1,4 @@
-VERSION = 2.62
+VERSION = 2.63
 
 #=============================== IMPORTS ZONE ===============================
 import requests
@@ -86,6 +86,7 @@ def infos_on(pokedexId : int, url : str = API_URL, headers : str = API_HEADER)->
             return TMP.json()[pokedexId]
         except :
             debug_sys.log('ERROR', f'Information request for N°{pokedexId} failed because not listed.')
+            return {"status": 404,"message": "Impossible de trouver le Pokémon dans la base de données."}
     else :
         response = requests.get(f"{url}/{pokedexId}", headers=headers)
         if response.status_code == 200:

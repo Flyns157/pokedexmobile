@@ -1,82 +1,159 @@
 {% extends "layout.html" %}
 {% block head %}
 {{ super() }}
+<link rel="stylesheet" href="/css/search-bar_style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>Pokédex : {{ poke_infos.name.fr }}</title>
 {% endblock %}
 {% block header %}
 {{ super() }}
 <div class="pvcenter">
-    <div class="corps" style="margin-top: 85px;">
-        <form form method="POST" action="/fr">
-            {{ form.csrf_token }}
-            {{ form.recherche() }}
-            <input type="submit" value="Rechercher" id="button_recherche">
-        </form>
+    <div class="pvcenterin">
+        <!--SEE : https://codepen.io/supah/pen/XdKMJK-->
+        <div id="search-zone">
+            <form class="search-form" form method="POST" action="/fr">
+                {{ form.csrf_token }}
+                {{ form.recherche(class="search-input") }}
+                <button type="submit" class="search-button">
+                    <svg class="submit-button">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+                    </svg>
+                </button>
+                <div class="search-option">
+                    <div>
+                        <input name="type" type="radio" value="type-Pokémons" id="type-Pokémons">
+                        <label for="type-Pokémons">
+                            <svg class="edit-pen-title">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#Pokémons"></use>
+                            </svg>
+                            <span>Pokémons</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input name="type" type="radio" value="type-Objets" id="type-Objets" checked="">
+                        <label for="type-Objets">
+                            <svg class="edit-pen-title">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#Objets"></use>
+                            </svg>
+                            <span>Objets</span>
+                        </label>
+                    </div>
+                </div>
+            </form>
+            <div id="suggestions" style="display: none;"></div>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
+            <symbol id="search" viewBox="0 0 32 32">
+                <path
+                    d="M 19.5 3 C 14.26514 3 10 7.2651394 10 12.5 C 10 14.749977 10.810825 16.807458 12.125 18.4375 L 3.28125 27.28125 L 4.71875 28.71875 L 13.5625 19.875 C 15.192542 21.189175 17.250023 22 19.5 22 C 24.73486 22 29 17.73486 29 12.5 C 29 7.2651394 24.73486 3 19.5 3 z M 19.5 5 C 23.65398 5 27 8.3460198 27 12.5 C 27 16.65398 23.65398 20 19.5 20 C 15.34602 20 12 16.65398 12 12.5 C 12 8.3460198 15.34602 5 19.5 5 z" />
+            </symbol>
+            <symbol id="Pokémons" viewbox="0 0 512 512">
+                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" stroke="none">
+                    <path d="M2370 5114 c-19 -2 -78 -9 -130 -15 -548 -62 -1083 -325 -1489 -730
+  -405 -406 -652 -907 -732 -1489 -18 -125 -18 -515 0 -640 105 -762 511 -1409
+  1146 -1826 776 -510 1793 -550 2615 -104 125 68 154 91 179 143 43 89 15 193
+  -68 252 -36 25 -52 30 -104 30 -38 0 -73 -6 -92 -16 -168 -91 -236 -124 -330
+  -162 -622 -250 -1328 -197 -1898 143 -582 346 -976 947 -1052 1603 l-6 57 636
+  -2 637 -3 22 -70 c93 -290 331 -515 631 -596 115 -32 335 -32 450 0 300 81
+  538 306 631 596 l22 70 637 3 637 2 -7 -52 c-40 -311 -153 -628 -321 -898 -56
+  -90 -59 -98 -59 -160 0 -78 26 -127 88 -168 56 -37 153 -39 210 -3 60 37 182
+  235 276 449 469 1060 169 2297 -734 3025 -364 293 -768 469 -1245 542 -100 15
+  -472 28 -550 19z m514 -418 c934 -147 1671 -884 1811 -1814 8 -56 15 -106 15
+  -112 0 -7 -211 -9 -636 -8 l-636 3 -22 70 c-93 290 -331 515 -631 596 -65 18
+  -107 22 -225 22 -118 0 -160 -4 -225 -22 -300 -81 -538 -306 -631 -596 l-22
+  -70 -637 -3 -636 -2 6 57 c66 568 381 1115 844 1464 319 240 686 386 1081 429
+  117 12 424 4 544 -14z m-222 -1647 c187 -39 348 -200 387 -387 34 -165 -16
+  -330 -138 -453 -199 -199 -503 -199 -702 0 -199 199 -199 505 1 702 125 123
+  286 173 452 138z" />
+                </g>
+            </symbol>
+            <symbol id="Objets" viewbox="0 0 32 32">
+                <g transform="translate(0.000000,32.000000) scale(0.100000,-0.100000)" stroke="none">
+                    <path d="M63 253 c-3 -9 0 -28 8 -42 19 -34 63 -39 100 -12 16 12 29 17 29 12
+  0 -16 -30 -41 -48 -41 -29 0 -62 -30 -62 -55 0 -47 64 -69 119 -41 42 22 56
+  43 41 61 -11 13 -17 11 -47 -16 -37 -32 -66 -35 -71 -7 -2 11 9 20 39 29 56
+  19 87 59 71 94 -16 35 -45 32 -91 -10 -44 -40 -56 -43 -71 -16 -13 25 -13 51
+  0 51 6 0 10 -6 10 -13 0 -7 6 -22 14 -33 13 -17 13 -15 3 19 -12 39 -33 49
+  -44 20z m167 -13 c0 -5 -6 -10 -14 -10 -8 0 -18 5 -21 10 -3 6 3 10 14 10 12
+  0 21 -4 21 -10z m-80 -89 c0 -13 -28 -22 -35 -11 -3 4 1 11 7 13 20 8 28 8 28
+  -2z m100 -32 c0 -12 -60 -49 -79 -49 -8 0 3 15 25 34 37 32 54 37 54 15z" />
+                </g>
+            </symbol>
+        </svg>
     </div>
 </div>
 {% endblock %}
 {% block content %}
-<main>
-    <h1>{{ poke_infos.name.fr }} ({{ poke_infos.name.en }} / {{ poke_infos.name.jp }})</h1>
-    <img id="image1" src="{{ poke_infos.sprites.regular }}" alt="Image régulière" onclick="toggleImages()">
-    <img id="image2" class="hidden" src="{{ poke_infos.sprites.shiny }}" alt="Image shiny" onclick="toggleImages()">
-    {% if poke_infos.sprites.gmax %}
-    <img src="{{ poke_infos.sprites.gmax }}" alt="Image G-Max">
-    {% endif %}
-    <h2>Types</h2>
-    {% for type in poke_infos.types %}
-    <img src="{{ type.image }}" alt="{{ type.name }}">
-    {% endfor %}
-    <h2>Talents</h2>
-    <ul>
-        {% for talent in poke_infos.talents %}
-        <li>{{ talent.name }} {% if talent.tc %}(TC){% endif %}</li>
-        {% endfor %}
-    </ul>
-    <h2>Statistiques</h2>
-    <ul>
-        {% for stat, value in poke_infos.stats.items() %}
-        <li>{{ stat }}: {{ value }}</li>
-        {% endfor %}
-    </ul>
-    <h2>Résistances</h2>
-    <table>
-        <tr>
-            {% for resistance in poke_infos.resistances %}
-            <th>{{ resistance.name }}</th>
+<div class="datasheet">
+    <div class="images">
+        <img id="image1" src="{{ poke_infos.sprites.regular }}" alt="Image régulière" onclick="toggleImages()">
+        <img id="image2" class="hidden" src="{{ poke_infos.sprites.shiny }}" alt="Image shiny" onclick="toggleImages()">
+        {% if poke_infos.sprites.gmax %}
+        <img id="image3" src="{{ poke_infos.sprites.gmax }}" alt="Image G-Max">
+        {% endif %}
+    </div>
+    <div class="data">
+        <h1>{{ poke_infos.name.fr }} ({{ poke_infos.name.en }} / {{ poke_infos.name.jp }})</h1>
+        <div>
+            {% for type in poke_infos.types %}
+            <img src="{{ type.image }}" alt="{{ type.name }}">
             {% endfor %}
-        </tr>
-        <tr>
-            {% for resistance in poke_infos.resistances %}
-            <td>{{ resistance.multiplier }}</td>
-            {% endfor %}
-        </tr>
-    </table>
-    <h2>Évolution</h2>
-    {% if poke_infos.evolution.pre or poke_infos.evolution.mega %}
-    {% if poke_infos.evolution.pre %}
-    <ul>
-        {% for evolution in poke_infos.evolution.pre %}
-        <li><a href="/{{ evolution.pokedexId }}">{{ evolution.name }} (ID : {{ evolution.pokedexId }})</a> - Condition :
-            {{ evolution.condition }}</li>
+        </div>
+        <div>
+            <h2>Talents</h2>
+            <ul>
+                {% for talent in poke_infos.talents %}
+                <li>{{ talent.name }} {% if talent.tc %}(TC){% endif %}</li>
+                {% endfor %}
+            </ul>
+            <h2>Statistiques</h2>
+            <table>
+                {% for stat, value in poke_infos.stats.items() %}
+                <tr class="stat"><td>{{ stat }}: {{ value }}</td><td><div style="width: {{ value }}%;"><div class="statcolor" style="width: calc(10000% / {{ value }});"></div></div></td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+<h2>Résistances</h2>
+<table>
+    <tr>
+        {% for resistance in poke_infos.resistances %}
+        <th>{{ resistance.name }}</th>
         {% endfor %}
-    </ul>
-    {% endif %}
-    {% if poke_infos.evolution.mega %}
-    <h3>Méga Évolution</h3>
-    {% for mega in poke_infos.evolution.mega %}
-    <img src="{{ mega.sprites.regular }}" alt="Image régulière de la méga évolution">
-    <img src="{{ mega.sprites.shiny }}" alt="Image shiny de la méga évolution">
+    </tr>
+    <tr>
+        {% for resistance in poke_infos.resistances %}
+        <td>{{ resistance.multiplier }}</td>
+        {% endfor %}
+    </tr>
+</table>
+<h2>Évolution</h2>
+{% if poke_infos.evolution.pre or poke_infos.evolution.mega %}
+{% if poke_infos.evolution.pre %}
+<ul>
+    {% for evolution in poke_infos.evolution.pre %}
+    <li><a href="/{{ evolution.pokedexId }}">{{ evolution.name }} (ID : {{ evolution.pokedexId }})</a> - Condition :
+        {{ evolution.condition }}</li>
     {% endfor %}
-    {% endif %}
-    {% else %}
-    <h3>Ce pokémon n'est pas le réultat d'une évolution !</h3>
-    {% endif %}
-</main>
+</ul>
+{% endif %}
+{% if poke_infos.evolution.mega %}
+<h3>Méga Évolution</h3>
+{% for mega in poke_infos.evolution.mega %}
+<img src="{{ mega.sprites.regular }}" alt="Image régulière de la méga évolution">
+<img src="{{ mega.sprites.shiny }}" alt="Image shiny de la méga évolution">
+{% endfor %}
+{% endif %}
+{% else %}
+<h3>Ce pokémon n'est pas le réultat d'une évolution !</h3>
+{% endif %}
+
 {% endblock %}
 
 {% block footer %}
 {{ super() }}
+<script src="/js/Search_gestion.js"></script>
 <script>
     function toggleImages() {
         var image1 = document.getElementById('image1');
