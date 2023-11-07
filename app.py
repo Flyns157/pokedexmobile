@@ -63,10 +63,18 @@ def pokemon_view(id):
 #=============================== TEST ZONE ===============================
 from flask import request, jsonify
 
-@app.route('/search_test', methods=['GET'])
-def search_test():
+@app.route('/test/<id>', methods=['GET'])
+def search_test(id):
     poke_name_form = SearchForm()
-    return render_template('test_page.html', form = poke_name_form)
+    poke_infos = search_engine.infos_on(id)
+    debug_sys.log('INFO',str(poke_infos))
+    try:
+        if poke_infos['status'] == 404:
+            debug_sys.log('404',f'''{poke_infos['message']} : "/{id}"''')
+        return f'''404 : {poke_infos['message']}"'''
+    except:
+        pass
+    return render_template('test_page.html', form = poke_name_form, poke_infos = poke_infos)
 
 @app.route('/search', methods=['GET'])
 def search():
