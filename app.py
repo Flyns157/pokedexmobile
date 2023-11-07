@@ -49,7 +49,7 @@ def fr():
 @app.route('/fr/<id>')
 def pokemon_view(id):
     poke_name_form = SearchForm()
-    poke_infos = requests.get(f"{API_URL}/{id}",API_HEADER).json()
+    poke_infos = search_engine.infos_on(id)
     debug_sys.log('INFO',str(poke_infos))
     try:
         if poke_infos['status'] == 404:

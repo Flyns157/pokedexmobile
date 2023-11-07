@@ -1,4 +1,4 @@
-VERSION = 2.63
+VERSION = 2.64
 
 #=============================== IMPORTS ZONE ===============================
 import requests
@@ -66,7 +66,7 @@ def search(input : str, language : str, url : str = API_URL, headers : str = API
                 if ratio >= p:
                     results[pokemon['pokedexId']] = ratio
     # Sorting
-    return [id for id, ratio in sorted(results.items(), key=lambda x: x[-1], reverse=True)]
+    return [int(id) for id, ratio in sorted(results.items(), key=lambda x: x[-1], reverse=True)]
 
 def infos_on(pokedexId : int, url : str = API_URL, headers : str = API_HEADER)-> dict :
     """
@@ -83,7 +83,7 @@ def infos_on(pokedexId : int, url : str = API_URL, headers : str = API_HEADER)->
     if ECO :
         try :
             debug_sys.log('INFO', f'Information request for N°{pokedexId} in ECO mode.')
-            return TMP.json()[pokedexId]
+            return list(TMP.json())[int(pokedexId)]
         except :
             debug_sys.log('ERROR', f'Information request for N°{pokedexId} failed because not listed.')
             return {"status": 404,"message": "Impossible de trouver le Pokémon dans la base de données."}
