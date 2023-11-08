@@ -1,0 +1,87 @@
+.caroussel_diapo {
+    input {
+        display: none;
+    }
+
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+
+    input[type="radio"] + label {
+        cursor: pointer;
+        background-color: hsl(203, 77%, 81%);
+        display: inline-block;
+        width: 20px;
+        border-radius: 50%;
+        height: 20px;
+    }
+
+    input[type="radio"]:checked + label {
+        background-color: hsl(203, 77%, 61%);
+    }
+
+    #carou_un:checked ~ .contenu_carou .caroussel {
+        transform: translateZ(-540px);
+    }
+
+    #carou_deux:checked ~ .contenu_carou .caroussel {
+        transform: translateZ(-540px) rotateY(-45deg);
+    }
+
+    #carou_trois:checked ~ .contenu_carou .caroussel {
+        transform: translateZ(-540px) rotateY(-90deg);
+    }
+
+    #carou_quatre:checked ~ .contenu_carou .caroussel {
+        transform: translateZ(-540px) rotateY(-135deg);
+    }
+
+    #carou_un:checked ~ .contenu_carou .caroussel img:nth-child(1) {
+        transform: translateZ(540px) scale(1);
+    }
+
+    #carou_deux:checked ~ .contenu_carou .caroussel img:nth-child(2) {
+        transform: rotateY(45deg) translateZ(540px) scale(1);
+    }
+
+    #carou_trois:checked ~ .contenu_carou .caroussel img:nth-child(3) {
+        transform: rotateY(90deg) translateZ(540px) scale(1);
+    }
+
+    #carou_quatre:checked ~ .contenu_carou .caroussel img:nth-child(4) {
+        transform: rotateY(135deg) translateZ(540px) scale(1);
+    }
+}
+
+.contenu_carou {
+    width: 500px;
+    height: 332px;
+    margin: 2rem auto;
+    perspective: 1000px;
+}
+
+.caroussel {
+    position: relative;
+    transform-style: preserve-3d;
+    width: 500px;
+    height: 332px;
+    transition: 1s transform;
+
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        outline: 1px solid transparent;
+        backface-visibility: hidden;
+        will-change: transform;
+        transition: 1s transform;
+
+        height: 100%;
+
+        @for $i from 1 through 4 {
+            &:nth-child(#{$i}) {
+                transform: rotateY((45deg * ($i - 1))) translateZ(540px) scale(0.8);
+            }
+        }
+    }
+}

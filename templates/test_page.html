@@ -1,18 +1,116 @@
 <html>
+
 <head>
     <title>Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        p,
+        li {
+            color: #333;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .container div {
+            flex: 1 0 21%;
+            /* grow | shrink | basis */
+            margin: 1%;
+            background-color: #fff;
+            padding: 1%;
+        }
+
+        .container div h2 {
+            text-align: center;
+            color: #555;
+        }
+
+        .container div ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .container div table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .container div table,
+        .container div th,
+        .container div td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        .container div table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <link rel="stylesheet" href="/css/caroussel_style.css">
 </head>
+
 <body>
-    <h1>Informations sur le Pokémon Herbizarre</h1>
-    <p>Pokédex ID : {{ poke_infos.pokedexId }}</p>
-    <p>Génération : {{ poke_infos.generation }}</p>
-    <p>Catégorie : {{ poke_infos.category }}</p>
-    <p>Nom : {{ poke_infos.name.fr }}</p>
-    <p>Nom anglais : {{ poke_infos.name.en }}</p>
-    <p>Nom japonais : {{ poke_infos.name.jp }}</p>
+    <h1>Informations sur le Pokémon Dracaufeu</h1>
+    <div class="container">
+        <p>Pokédex ID : {{ poke_infos.pokedexId }}</p>
+        <p>Génération : {{ poke_infos.generation }}</p>
+        <p>Catégorie : {{ poke_infos.category }}</p>
+        <p>Nom : {{ poke_infos.name.fr }}</p>
+        <p>Nom anglais : {{ poke_infos.name.en }}</p>
+        <p>Nom japonais : {{ poke_infos.name.jp }}</p>
+    </div>
+
+
+    <div class='caroussel_diapo'>
+        <input checked id="carou_un" name="rotation" type="radio">
+        <label for="carou_un"></label>
+        <input id="carou_deux" name="rotation" type="radio">
+        <label for="carou_deux"></label>
+        <input id="carou_trois" name="rotation" type="radio">
+        <label for="carou_trois"></label>
+        <input id="carou_quatre" name="rotation" type="radio">
+        <label for="carou_quatre"></label>
+        <div class="contenu_carou">
+            <div class="caroussel">
+                <img src="{{ poke_infos.sprites.regular }}" alt="Sprite normal">
+                <img src="{{ poke_infos.sprites.shiny }}" alt="Sprite shiny">
+                <img src="{{ poke_infos.sprites.gmax.regular }}" alt="Sprite gigamax normal">
+                <img src="{{ poke_infos.sprites.gmax.shiny }}" alt="Sprite gigamax shiny">
+            </div>
+        </div>
+    </div>
+
+
+
     <p>Sprites : </p>
     <img src="{{ poke_infos.sprites.regular }}" alt="Sprite normal">
     <img src="{{ poke_infos.sprites.shiny }}" alt="Sprite shiny">
+    <p>Gigamax : </p>
+    <img src="{{ poke_infos.sprites.gmax.regular }}" alt="Sprite gigamax normal">
+    <img src="{{ poke_infos.sprites.gmax.shiny }}" alt="Sprite gigamax shiny">
     <p>Types : </p>
     <ul>
         {% for type in poke_infos.types %}
@@ -68,7 +166,12 @@
         {% if poke_infos.evolution.mega %}
         <li>Méga-Évolution : </li>
         <ul>
-            <li>{{ poke_infos.evolution.mega.name }} (ID : {{ poke_infos.evolution.mega.pokedexId }})</li>
+            {% for mega in poke_infos.evolution.mega %}
+            <li>Orbe : {{ mega.orbe }}</li>
+            <li>Sprites : </li>
+            <img src="{{ mega.sprites.regular }}" alt="Sprite méga normal">
+            <img src="{{ mega.sprites.shiny }}" alt="Sprite méga shiny">
+            {% endfor %}
         </ul>
         {% endif %}
     </ul>
@@ -84,4 +187,5 @@
     <p>Expérience au niveau 100 : {{ poke_infos.level_100 }}</p>
     <p>Forme : {{ poke_infos.forme or 'Aucune' }}</p>
 </body>
+
 </html>
