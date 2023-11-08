@@ -1,3 +1,6 @@
+$base-color: hsl(203, 77%, 81%);
+$selection-color: hsl(203, 77%, 61%);
+
 .caroussel_diapo {
     input {
         display: none;
@@ -9,7 +12,7 @@
 
     input[type="radio"] + label {
         cursor: pointer;
-        background-color: hsl(203, 77%, 81%);
+        background-color: $base-color;
         display: inline-block;
         width: 20px;
         border-radius: 50%;
@@ -17,39 +20,17 @@
     }
 
     input[type="radio"]:checked + label {
-        background-color: hsl(203, 77%, 61%);
+        background-color: $selection-color;
     }
 
-    #carou_un:checked ~ .contenu_carou .caroussel {
-        transform: translateZ(-540px);
-    }
+    @for $i from 1 through 10 {
+        #carou_#{$i}:checked ~ .contenu_carou .caroussel {
+            transform: translateZ(-540px) rotateY(-45deg * ($i - 1));
 
-    #carou_deux:checked ~ .contenu_carou .caroussel {
-        transform: translateZ(-540px) rotateY(-45deg);
-    }
-
-    #carou_trois:checked ~ .contenu_carou .caroussel {
-        transform: translateZ(-540px) rotateY(-90deg);
-    }
-
-    #carou_quatre:checked ~ .contenu_carou .caroussel {
-        transform: translateZ(-540px) rotateY(-135deg);
-    }
-
-    #carou_un:checked ~ .contenu_carou .caroussel img:nth-child(1) {
-        transform: translateZ(540px) scale(1);
-    }
-
-    #carou_deux:checked ~ .contenu_carou .caroussel img:nth-child(2) {
-        transform: rotateY(45deg) translateZ(540px) scale(1);
-    }
-
-    #carou_trois:checked ~ .contenu_carou .caroussel img:nth-child(3) {
-        transform: rotateY(90deg) translateZ(540px) scale(1);
-    }
-
-    #carou_quatre:checked ~ .contenu_carou .caroussel img:nth-child(4) {
-        transform: rotateY(135deg) translateZ(540px) scale(1);
+            &div:nth-child(#{$i}) {
+                transform: rotateY(45deg * ($i - 1)) translateZ(540px) scale(1);
+            }
+        }
     }
 }
 
@@ -77,11 +58,25 @@
         transition: 1s transform;
 
         height: 100%;
+    }
 
-        @for $i from 1 through 4 {
+    div {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        @for $i from 1 through 10 {
             &:nth-child(#{$i}) {
                 transform: rotateY((45deg * ($i - 1))) translateZ(540px) scale(0.8);
             }
         }
+    }
+}
+
+.caroussel_diapo {
+    border: solid 3px black;
+    * {
+        border: solid 3px black;
     }
 }
