@@ -1,14 +1,15 @@
 $base-color: hsl(203, 77%, 81%);
 $selection-color: hsl(203, 77%, 61%);
+$nb-max-img: 10;
 
 .caroussel_diapo {
     input {
         display: none;
     }
 
-    position: relative;
     text-align: center;
     margin: 0 auto;
+    padding: 20px;
 
     input[type="radio"] + label {
         cursor: pointer;
@@ -23,7 +24,7 @@ $selection-color: hsl(203, 77%, 61%);
         background-color: $selection-color;
     }
 
-    @for $i from 1 through 10 {
+    @for $i from 1 through $nb-max-img {
         #carou_#{$i}:checked ~ .contenu_carou .caroussel {
             transform: translateZ(-540px) rotateY(-45deg * ($i - 1));
 
@@ -46,7 +47,9 @@ $selection-color: hsl(203, 77%, 61%);
     transform-style: preserve-3d;
     width: 500px;
     height: 332px;
-    transition: 1s transform;
+    transition: 0.5s transform;
+    padding-left: 11%;
+    // display: flex;
 
     img {
         position: absolute;
@@ -66,7 +69,7 @@ $selection-color: hsl(203, 77%, 61%);
         justify-content: center;
         align-items: center;
         
-        @for $i from 1 through 10 {
+        @for $i from 1 through $nb-max-img {
             &:nth-child(#{$i}) {
                 transform: rotateY((45deg * ($i - 1))) translateZ(540px) scale(0.8);
             }

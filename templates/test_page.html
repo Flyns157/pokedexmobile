@@ -86,32 +86,35 @@
 
 
     <div class='caroussel_diapo'>
+    <p>Sprites : </p>
         <input checked id="carou_1" name="rotation" type="radio">
         <label for="carou_1"></label>
+        {% if poke_infos.sprites.gmax %}
         <input id="carou_2" name="rotation" type="radio">
         <label for="carou_2"></label>
-        <div class="contenu_carou">
-            <div class="caroussel">
-                <div class="images">
-                    <img id="image1" src="{{ poke_infos.sprites.regular }}" alt="Image régulière" onclick="toggleImages()">
-                    <img id="image2" class="hidden" src="{{ poke_infos.sprites.shiny }}" alt="Image shiny" onclick="toggleImages()">
-                </div>
-                <div class="images">
-                    <img id="image1" src="{{ poke_infos.sprites.gmax.regular }}" alt="Sprite gigamax normal">
-                    <img id="image2" class="hidden" src="{{ poke_infos.sprites.gmax.shiny }}" alt="Sprite gigamax shiny">
-                </div>
-            </div>
+        {% endif %}
+        <div class="images">
+            <img id="image1" src="{{ poke_infos.sprites.regular }}" alt="Image régulière" onclick="toggleImages()">
+            <img id="image2" class="hidden" src="{{ poke_infos.sprites.shiny }}" alt="Image shiny" onclick="toggleImages()">
         </div>
+        {% if poke_infos.sprites.gmax %}
+        <div class="images">
+            <img id="image3" src="{{ poke_infos.sprites.gmax.regular }}" alt="Sprite gigamax normal" onclick="toggleImages()">
+            <img id="image4" class="hidden" src="{{ poke_infos.sprites.gmax.shiny }}" alt="Sprite gigamax shiny" onclick="toggleImages()">
+        </div>
+        {% if poke_infos.evolution.mega %}
+            {% for mega in poke_infos.evolution.mega %}
+                <div class="images">
+                    <img id="image5" src="{{ mega.sprites.regular }}" alt="Sprite méga normal"  onclick="toggleImages()">
+                    <img id="image6" class="hidden" src="{{ mega.sprites.shiny }}" alt="Sprite méga shiny"  onclick="toggleImages()">
+                    <p>Orbe : {{ mega.orbe }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        {% endif %}
     </div>
 
-
-
-    <p>Sprites : </p>
-    <img src="{{ poke_infos.sprites.regular }}" alt="Sprite normal">
-    <img src="{{ poke_infos.sprites.shiny }}" alt="Sprite shiny">
-    <p>Gigamax : </p>
-    <img src="{{ poke_infos.sprites.gmax.regular }}" alt="Sprite gigamax normal">
-    <img src="{{ poke_infos.sprites.gmax.shiny }}" alt="Sprite gigamax shiny">
     <p>Types : </p>
     <ul>
         {% for type in poke_infos.types %}
@@ -164,17 +167,7 @@
             {% endfor %}
         </ul>
         {% endif %}
-        {% if poke_infos.evolution.mega %}
-        <li>Méga-Évolution : </li>
-        <ul>
-            {% for mega in poke_infos.evolution.mega %}
-            <li>Orbe : {{ mega.orbe }}</li>
-            <li>Sprites : </li>
-            <img src="{{ mega.sprites.regular }}" alt="Sprite méga normal">
-            <img src="{{ mega.sprites.shiny }}" alt="Sprite méga shiny">
-            {% endfor %}
-        </ul>
-        {% endif %}
+        
     </ul>
     <p>Taille : {{ poke_infos.height }}</p>
     <p>Poids : {{ poke_infos.weight }}</p>
@@ -191,14 +184,14 @@
 <script src="/js/Search_gestion.js"></script>
 <script>
     function toggleImages() {
-        var image1 = document.getElementById('image1');
-        var image2 = document.getElementById('image2');
-        if (image1.classList.contains('hidden')) {
-            image1.classList.remove('hidden');
-            image2.classList.add('hidden');
-        } else {
-            image1.classList.add('hidden');
-            image2.classList.remove('hidden');
+        var numImages = 2; // Mettez ici le nombre total d'images
+        for (var i = 1; i <= numImages; i++) {
+            var image = document.getElementById('image' + i);
+            if (image.classList.contains('hidden')) {
+                image.classList.remove('hidden');
+            } else {
+                image.classList.add('hidden');
+            }
         }
     }
 </script>

@@ -176,9 +176,15 @@ footer{
 }
 
 /* Pokémon view */
-.images, .data, .datasheet {
+.images, .datasheet {
     border: solid black 5px;
 }
+
+.data {
+    background: white;
+    border-radius: 10px;
+}
+
 .datasheet {
     justify-content: center;
     align-items: center;
