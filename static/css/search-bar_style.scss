@@ -3,6 +3,12 @@ $color: #e24040;
 /*--------------------
 Search
 --------------------*/
+.pvcenterin #search-zone {
+  position: fixed;
+  top: 60px;
+  z-index: 10;
+}
+
 #search-zone {
   // overflow: hidden;
   display: flex;

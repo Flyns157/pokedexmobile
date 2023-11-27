@@ -14,12 +14,6 @@
     background-size: cover;
 }
 
-.pvcenterin {
-    position: fixed;
-    top: 60px;
-    z-index: 10;
-}
-
 .icenter {
     align-items: center;
     background-image: url("/img/index_back4.jpg");
@@ -172,57 +166,5 @@ footer{
 
     img {
         max-width: 250px;
-    }
-}
-
-/* Pokémon view */
-.images, .datasheet {
-    border: solid black 5px;
-}
-
-.data {
-    background: white;
-    border-radius: 10px;
-}
-
-.datasheet {
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    background-color: lightgrey;
-    margin: 120px 30px 30px 30px;
-    padding: 10px;
-}
-
-.data {
-    display: flex;
-    flex-direction: column;
-}
-
-.stat {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 10px 0;
-    td {
-        &:first-child {
-            width: 150px;
-        }
-        &:nth-child(2) {
-            width: 300px;
-            background-color: rgb(200, 198, 198);
-            border: solid 2px lightgrey;
-            border-radius: 15px;
-            padding: 0;
-        }
-        div {margin: 0;
-            border-radius: 20px;
-            padding: 5px;
-            overflow: hidden;
-            .statcolor {
-                background: linear-gradient(to right, red, #fe9601, #ffcb01, #9de63a);
-            }
-        }
     }
 }
