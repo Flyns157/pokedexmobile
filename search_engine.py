@@ -1,4 +1,4 @@
-VERSION = 2.64
+__version__ = 2.64
 
 #=============================== IMPORTS ZONE ===============================
 import requests
@@ -7,7 +7,7 @@ from fuzzywuzzy import fuzz
 
 
 #=============================== CHECKING ZONE ===============================
-if debug_sys.VERSION != 2.2 :
+if debug_sys.__version__ != 2.2 :
     raise Exception(f'Incorrect version of the "debug_sys" python library, the current version is {debug_sys.VERSION} but the expected version is 2.2.')
 
 
@@ -61,7 +61,7 @@ def search(input : str, language : str, url : str = API_URL, headers : str = API
     for pokemon in response.json():
         for lang in language :
             if lang in pokemon['name']:
-                name = pokemon['name'][lang]
+                name : str = pokemon['name'][lang]
                 ratio = fuzz.ratio(input.lower(), name.lower())
                 if ratio >= p:
                     results[pokemon['pokedexId']] = ratio

@@ -4,6 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
 from wtforms import StringField, IntegerField
 import requests
+from unidecode import unidecode
 # personnal modules
 import search_engine
 search_engine.ECO = True
@@ -32,6 +33,10 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
+@app.template_filter('basic_format')
+def basic_format(input_str : str):
+    return unidecode(input_str.lower())
+
 #=============================== MAIN ZONE ===============================
 @app.route('/')
 def index():
@@ -57,7 +62,9 @@ def pokemon_view(id):
         return f'''404 : {poke_infos['message']}"'''
     except:
         pass
-    return render_template('pokemon_view.html', form = poke_name_form, poke_infos = poke_infos)
+    intitule = ['Vie','Attaque','Deffense','Attaque spéciale','Deffense spéciale','Vitesse']
+    stats = [{'intitule': i, 'stat': s, 'value': v} for i, s, v in zip(intitule, poke_infos['stats'].keys(), poke_infos['stats'].values())]
+    return render_template('pokemon_view.html', form = poke_name_form, poke_infos = poke_infos, stats=stats)
 
 
 #=============================== TEST ZONE ===============================

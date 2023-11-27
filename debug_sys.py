@@ -1,4 +1,4 @@
-VERSION = 2.2
+__version__ = 2.2
 #=============================== IMPORTS ZONE ===============================
 from datetime import datetime
 
@@ -26,9 +26,9 @@ def log(type : str, content : str, content_size_limit : int = 150, file : str = 
         type (str): Le type du message à enregistrer.
         content (str): Le contenu du message à enregistrer.
         content_size_limit (int, optional): La limite de taille du contenu du message. 
-                                             Par défaut, elle est fixée à 150 caractères.
+                                            Par défaut, elle est fixée à 150 caractères.
         file (str, optional): Le nom du fichier journal dans lequel enregistrer le message. 
-                               Par défaut, il est fixé à 'gaza.log'.
+                              Par défaut, il est fixé à 'gaza.log'.
     
     Retourne:
         None
