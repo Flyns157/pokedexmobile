@@ -69,7 +69,6 @@
             background-color: #f2f2f2;
         }
     </style>
-    <link rel="stylesheet" href="/css/caroussel_style.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -86,32 +85,25 @@
 
 
     <div class='caroussel_diapo'>
-    <p>Sprites : </p>
-        <input checked id="carou_1" name="rotation" type="radio">
-        <label for="carou_1"></label>
+        <p>Sprites : </p>
+        <div class="images">
+            <img class="imageP" src="{{ poke_infos.sprites.regular }}" alt="Image régulière" onclick="toggleImages()">
+            <img class="imageP hidden" src="{{ poke_infos.sprites.shiny }}" alt="Image shiny" onclick="toggleImages()">
+        </div>
         {% if poke_infos.sprites.gmax %}
-        <input id="carou_2" name="rotation" type="radio">
-        <label for="carou_2"></label>
+        <div class="images">
+            <img class="imageP" src="{{ poke_infos.sprites.gmax.regular }}" alt="Sprite gigamax normal" onclick="toggleImages()">
+            <img class="imageP hidden" src="{{ poke_infos.sprites.gmax.shiny }}" alt="Sprite gigamax shiny" onclick="toggleImages()">
+        </div>
         {% endif %}
-        <div class="images">
-            <img id="image1" src="{{ poke_infos.sprites.regular }}" alt="Image régulière" onclick="toggleImages()">
-            <img id="image2" class="hidden" src="{{ poke_infos.sprites.shiny }}" alt="Image shiny" onclick="toggleImages()">
-        </div>
-        {% if poke_infos.sprites.gmax %}
-        <div class="images">
-            <img id="image3" src="{{ poke_infos.sprites.gmax.regular }}" alt="Sprite gigamax normal" onclick="toggleImages()">
-            <img id="image4" class="hidden" src="{{ poke_infos.sprites.gmax.shiny }}" alt="Sprite gigamax shiny" onclick="toggleImages()">
-        </div>
         {% if poke_infos.evolution.mega %}
             {% for mega in poke_infos.evolution.mega %}
                 <div class="images">
-                    <img id="image5" src="{{ mega.sprites.regular }}" alt="Sprite méga normal"  onclick="toggleImages()">
-                    <img id="image6" class="hidden" src="{{ mega.sprites.shiny }}" alt="Sprite méga shiny"  onclick="toggleImages()">
+                    <img class="imageP" src="{{ mega.sprites.regular }}" alt="Sprite méga normal"  onclick="toggleImages()">
+                    <img class="imageP hidden" src="{{ mega.sprites.shiny }}" alt="Sprite méga shiny"  onclick="toggleImages()">
                     <p>Orbe : {{ mega.orbe }}</p>
                 </div>
             {% endfor %}
-        {% endif %}
-        
         {% endif %}
     </div>
 
@@ -184,9 +176,9 @@
 <script src="/js/Search_gestion.js"></script>
 <script>
     function toggleImages() {
-        var numImages = 2; // Mettez ici le nombre total d'images
-        for (var i = 1; i <= numImages; i++) {
-            var image = document.getElementById('image' + i);
+        var images = document.getElementsByClassName('imageP');
+        for (var i = 0; i < images.length; i++) {
+            var image = images[i];
             if (image.classList.contains('hidden')) {
                 image.classList.remove('hidden');
             } else {

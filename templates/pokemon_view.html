@@ -2,6 +2,7 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="/css/search-bar_style.css">
+<link rel="stylesheet" href="/css/pokemon_style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>Pokédex : {{ poke_infos.name.fr }}</title>
 {% endblock %}
@@ -85,11 +86,27 @@
 {% endblock %}
 {% block content %}
 <div class="datasheet">
-    <div class="images">
-        <img id="image1" src="{{ poke_infos.sprites.regular }}" alt="Image régulière" onclick="toggleImages()">
-        <img id="image2" class="hidden" src="{{ poke_infos.sprites.shiny }}" alt="Image shiny" onclick="toggleImages()">
+    <div class='allImages'>
+        <div class="images">
+            <img class="imageP" src="{{ poke_infos.sprites.regular }}" alt="Image régulière" onclick="toggleImages()">
+            <img class="imageP hidden" src="{{ poke_infos.sprites.shiny }}" alt="Image shiny" onclick="toggleImages()">
+            <p> </p>
+        </div>
         {% if poke_infos.sprites.gmax %}
-        <img id="image3" src="{{ poke_infos.sprites.gmax }}" alt="Image G-Max">
+        <div class="images">
+            <img class="imageP" src="{{ poke_infos.sprites.gmax.regular }}" alt="Sprite gigamax normal" onclick="toggleImages()">
+            <img class="imageP hidden" src="{{ poke_infos.sprites.gmax.shiny }}" alt="Sprite gigamax shiny" onclick="toggleImages()">
+            <p> </p>
+        </div>
+        {% endif %}
+        {% if poke_infos.evolution.mega %}
+            {% for mega in poke_infos.evolution.mega %}
+                <div class="images">
+                    <img class="imageP" src="{{ mega.sprites.regular }}" alt="Sprite méga normal"  onclick="toggleImages()">
+                    <img class="imageP hidden" src="{{ mega.sprites.shiny }}" alt="Sprite méga shiny"  onclick="toggleImages()">
+                    <p>Orbe : {{ mega.orbe }}</p>
+                </div>
+            {% endfor %}
         {% endif %}
     </div>
     <div class="data">
@@ -108,8 +125,8 @@
             </ul>
             <h2>Statistiques</h2>
             <table>
-                {% for stat, value in poke_infos.stats.items() %}
-                <tr class="stat"><td>{{ stat }}: {{ value }}</td><td><div style="width: {{ value }}%;"><div class="statcolor" style="width: calc(10000% / {{ value }});"></div></div></td></tr>
+                {% for item in stats %}
+                <tr class="stat"><td>{{ item.intitule }} :<td><b>{{ item.value }}</b></td></td><td><div style="width: {{ item.value }}%;"><div class="statcolor" style="width: calc(10000% / {{ item.value }});"></div></div></td></tr>
                 {% endfor %}
             </table>
         </div>
@@ -119,7 +136,9 @@
 <table>
     <tr>
         {% for resistance in poke_infos.resistances %}
-        <th>{{ resistance.name }}</th>
+        <th>
+            <img src="https://raw.githubusercontent.com/Yarkis01/PokeAPI/images/types/{{ resistance.name|basic_format }}.png" alt="">
+        </th>
         {% endfor %}
     </tr>
     <tr>
@@ -138,13 +157,6 @@
     {% endfor %}
 </ul>
 {% endif %}
-{% if poke_infos.evolution.mega %}
-<h3>Méga Évolution</h3>
-{% for mega in poke_infos.evolution.mega %}
-<img src="{{ mega.sprites.regular }}" alt="Image régulière de la méga évolution">
-<img src="{{ mega.sprites.shiny }}" alt="Image shiny de la méga évolution">
-{% endfor %}
-{% endif %}
 {% else %}
 <h3>Ce pokémon n'est pas le réultat d'une évolution !</h3>
 {% endif %}
@@ -156,14 +168,14 @@
 <script src="/js/Search_gestion.js"></script>
 <script>
     function toggleImages() {
-        var image1 = document.getElementById('image1');
-        var image2 = document.getElementById('image2');
-        if (image1.classList.contains('hidden')) {
-            image1.classList.remove('hidden');
-            image2.classList.add('hidden');
-        } else {
-            image1.classList.add('hidden');
-            image2.classList.remove('hidden');
+        var images = document.getElementsByClassName('imageP');
+        for (var i = 0; i < images.length; i++) {
+            var image = images[i];
+            if (image.classList.contains('hidden')) {
+                image.classList.remove('hidden');
+            } else {
+                image.classList.add('hidden');
+            }
         }
     }
 </script>
