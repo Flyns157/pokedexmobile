@@ -1,94 +1,80 @@
-#=============================== IMPORTS ZONE ===============================
-from flask import Flask, render_template, redirect, url_for
-from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired
-from wtforms import StringField, IntegerField
-import requests
-from unidecode import unidecode
-# personnal modules
-import search_engine
-search_engine.ECO = True
-import debug_sys
+from flask import Flask, render_template, request, redirect
+from models import db, EmployeeModel
+
+app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)
 
 
-#=============================== INIT ZONE ===============================
-API_URL = "https://api-pokemon-fr.vercel.app/api/v1/pokemon"
-API_HEADER = {
-    "User-Agent": "RobotPokemon",
-    "From": "adresse[at]domaine[dot]com",
-    'Content-type': 'application/json'
-}
-MAX_SUGGESTION = 6
-
-app = Flask(__name__, static_url_path='',
-            static_folder='static',
-            template_folder='templates')
-
-app.secret_key = "MSI c kro bien !"
-
-class SearchForm(FlaskForm):
-    recherche = StringField('nom du pokemon', validators=[DataRequired()])
-
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.before_first_request
+def create_table():
+    db.create_all()
 
 
-@app.template_filter('basic_format')
-def basic_format(input_str : str):
-    return unidecode(input_str.lower())
+@app.route('/data/create', methods=['GET', 'POST'])
+def create():
+    if request.method == 'GET':
+        return render_template('createpage.html')
 
-#=============================== MAIN ZONE ===============================
-@app.route('/')
-def index():
-    return redirect(url_for('fr'))
-
-@app.route('/fr', methods=['GET', 'POST'])
-def fr():
-    poke_name_form = SearchForm()
-    if poke_name_form.validate_on_submit():
-        search_result = search_engine.search(poke_name_form.recherche.data,'fr')[0]
-        debug_sys.log('SEARCH',f'''{poke_name_form.recherche.data} => {search_result}''')
-        return redirect(url_for('pokemon_view', id = search_result))
-    return render_template('index.html', form = poke_name_form)
-
-@app.route('/fr/<id>')
-def pokemon_view(id):
-    poke_name_form = SearchForm()
-    poke_infos = search_engine.infos_on(id)
-    debug_sys.log('INFO',str(poke_infos))
-    try:
-        if poke_infos['status'] == 404:
-            debug_sys.log('404',f'''{poke_infos['message']} : "/{id}"''')
-        return f'''404 : {poke_infos['message']}"'''
-    except:
-        pass
-    intitule = ['Vie','Attaque','Deffense','Attaque spéciale','Deffense spéciale','Vitesse']
-    stats = [{'intitule': i, 'stat': s, 'value': v} for i, s, v in zip(intitule, poke_infos['stats'].keys(), poke_infos['stats'].values())]
-    return render_template('pokemon_view.html', form = poke_name_form, poke_infos = poke_infos, stats=stats)
+    if request.method == 'POST':
+        employee_id = request.form['employee_id']
+        name = request.form['name']
+        age = request.form['age']
+        position = request.form['position']
+        employee = EmployeeModel(
+            employee_id=employee_id, name=name, age=age, position=position)
+        db.session.add(employee)
+        db.session.commit()
+        return redirect('/data')
 
 
-#=============================== TEST ZONE ===============================
-from flask import request, jsonify
+@app.route('/data')
+def RetrieveList():
+    employees = EmployeeModel.query.all()
+    return render_template('datalist.html', employees=employees)
 
-@app.route('/test/<id>', methods=['GET'])
-def search_test(id):
-    poke_name_form = SearchForm()
-    poke_infos = search_engine.infos_on(id)
-    debug_sys.log('INFO',str(poke_infos))
-    try:
-        if poke_infos['status'] == 404:
-            debug_sys.log('404',f'''{poke_infos['message']} : "/{id}"''')
-        return f'''404 : {poke_infos['message']}"'''
-    except:
-        pass
-    return render_template('test_page.html', form = poke_name_form, poke_infos = poke_infos)
 
-@app.route('/search', methods=['GET'])
-def search():
-    query = request.args.get('query')
-    suggestions = []
-    for id in search_engine.search(query,'fr')[:MAX_SUGGESTION]:
-        information = search_engine.infos_on(id)
-        suggestions.append((information['name']['fr'],id,information['sprites']['regular']))
-    debug_sys.log('SUGGEST', f'query={query} : ' + str(suggestions))
-    return jsonify(suggestions)
+@app.route('/data/<int:id>')
+def RetrieveEmployee(id):
+    employee = EmployeeModel.query.filter_by(employee_id=id).first()
+    if employee:
+        return render_template('data.html', employee=employee)
+    return f"Employee with id ={id} Doenst exist"
+
+
+@app.route('/data/<int:id>/update', methods=['GET', 'POST'])
+def update(id):
+    employee = EmployeeModel.query.filter_by(employee_id=id).first()
+    if request.method == 'POST':
+        if employee:
+            db.session.delete(employee)
+            db.session.commit()
+            name = request.form['name']
+            age = request.form['age']
+            position = request.form['position']
+            employee = EmployeeModel(
+                employee_id=id, name=name, age=age, position=position)
+            db.session.add(employee)
+            db.session.commit()
+            return redirect(f'/data/{id}')
+        return f"Employee with id = {id} Does nit exist"
+
+    return render_template('update.html', employee=employee)
+
+
+@app.route('/data/<int:id>/delete', methods=['GET', 'POST'])
+def delete(id):
+    employee = EmployeeModel.query.filter_by(employee_id=id).first()
+    if request.method == 'POST':
+        if employee:
+            db.session.delete(employee)
+            db.session.commit()
+            return redirect('/data')
+        abort(404)
+
+    return render_template('delete.html')
+
+
+app.run(host='localhost', port=5000)
