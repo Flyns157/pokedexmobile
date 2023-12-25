@@ -1,9 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
+from model import *
 
-db = SQLAlchemy()
-
-
-class EmployeeModel(db.Model):
+class Employee(db.Model):
     __tablename__ = "table"
 
     id = db.Column(db.Integer, primary_key=True)
