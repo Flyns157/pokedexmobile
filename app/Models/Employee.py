@@ -1,4 +1,4 @@
-from model import *
+from .Model import *
 
 class Employee(db.Model):
     __tablename__ = "table"

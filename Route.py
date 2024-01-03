@@ -1,4 +1,4 @@
-from flask import Flask
+from app.app import app
 
 
 def resource(path: str, controller):
