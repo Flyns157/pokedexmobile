@@ -1,0 +1,32 @@
+#============================== IMPORTS ZONE ==============================
+
+
+#=============================== INIT ZONE ===============================
+
+
+#=============================== MAIN ZONE ===============================
+# Display a listing of the resource.
+def index():abort(404)
+
+
+# Show the form for creating a new resource.
+def create():abort(404)
+
+
+# Store a newly created resource in storage.
+def store(request : Request):abort(404)
+
+
+# Display the specified resource.
+def show(id):abort(404)
+
+
+# Show the form for editing the specified resource.
+def edit(id):abort(404)
+
+
+# Update the specified resource in storage.
+def update(id):abort(404)
+
+# Remove the specified resource from storage.
+def destroy(id):abort(404)
