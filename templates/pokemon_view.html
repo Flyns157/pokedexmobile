@@ -108,6 +108,15 @@
                 </div>
             {% endfor %}
         {% endif %}
+        <div class="selctor">
+            <img src="" alt="regular sprite selector">
+            {% if poke_infos.sprites.gmax %}
+            <img src="" alt="Gmax regular sprite selector">
+            {% endif %}
+            {% for mega in poke_infos.evolution.mega %}
+                <img src="{{ mega.orbe|whatMega }}" alt="">
+            {% endfor %}
+        </div>
     </div>
     <div class="data">
         <h1>{{ poke_infos.name.fr }} ({{ poke_infos.name.en }} / {{ poke_infos.name.jp }})</h1>
