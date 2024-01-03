@@ -35,7 +35,7 @@ def show(id):
 
 
 # Show the form for editing the specified resource.
-def edit(id):pass
+def edit(id):abort(404)
 
 
 # Update the specified resource in storage.

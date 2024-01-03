@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en" data-mci-setup="true">
+<head>
+    <meta charset="UTF-8">
+    <script
+        src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+
+
+    <title>CodePen - pokemon!</title>
+
+    <link rel="canonical" href="https://codepen.io/liminalace/pen/VpyvoK">
+
+
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Bungee|Roboto');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            overflow: hidden;
+            background: #efefef;
+        }
+
+        .instruct {
+            color: #fff;
+            font-size: 30px;
+            font-family: 'Bungee';
+            margin-top: -30%;
+        }
+
+        html {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('http://media-s3-us-east-1.ceros.com/hype-beast/images/2018/07/13/a9a51bc0b8d626db493ab5f9a971b043/background-hero.png');
+            background-size: 1920px 1080px;
+            background-repeat: no-repeat;
+            background-position: center center;
+            position: relative;
+            font-family: sans-serif;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+        }
+
+        .ball {
+            bottom: 130px;
+            right: 0;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            animation: bouncein 1s forwards, fadeOut 18s ease-out forwards;
+        }
+
+        @keyframes bouncein {
+            0% {
+                transform: rotate(0deg) translateX(47vw) rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(-180deg) translateX(47vw) rotate(-900deg);
+            }
+        }
+
+        img.shine {
+            opacity: .3;
+            transform: scale(1) translate(-25%, -50%) !important;
+            animation: shineIn 2s ease-out forwards;
+        }
+
+        .top,
+        .bottom {
+            height: 50%;
+            width: 100%;
+            position: absolute;
+        }
+
+        .top.poke {
+            background: tomato;
+        }
+
+        .top.great {
+            background: #1C65D8;
+        }
+
+        .top.great::before {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 30px;
+            height: 10px;
+            background: tomato;
+            transform: rotate(45deg);
+            top: 20px;
+            left: 8px;
+        }
+
+        .top.great::after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 30px;
+            height: 10px;
+            background: tomato;
+            transform: rotate(-45deg);
+            top: 20px;
+            right: 8px;
+        }
+
+        .top.ultra {
+            background: #444;
+            overflow: hidden;
+        }
+
+        .top.ultra::after {
+            content: "";
+            display: block;
+            width: 45px;
+            height: 50px;
+            border-left: 15px solid #FFD740;
+            border-right: 15px solid #FFD740;
+            border-top: 15px solid #FFD740;
+            position: absolute;
+            top: -5px;
+            left: calc(50% - 37.5px)
+        }
+
+        .top.master {
+            background: #8465A9;
+        }
+
+        .top.master::before {
+            content: "";
+            display: block;
+            position: absolute;
+            background: #D670A2;
+            width: 25px;
+            height: 40px;
+            border-radius: 50%;
+            transform: rotate(-130deg);
+            left: 5px;
+        }
+
+        .top.master::after {
+            content: "";
+            display: block;
+            position: absolute;
+            background: #D670A2;
+            width: 25px;
+            height: 40px;
+            border-radius: 50%;
+            transform: rotate(130deg);
+            right: 5px;
+        }
+
+        .top {
+            border-top-left-radius: 600px;
+            border-top-right-radius: 600px;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 0%);
+            animation: topPop 2s ease-out;
+            opacity: 0;
+            z-index: 10;
+        }
+
+        .bottom::before {
+            content: "";
+            display: block;
+            height: 22px;
+            width: 22px;
+            background: #fff;
+            border-radius: 22px;
+            border: 1px solid black;
+            position: absolute;
+            top: -14.5px;
+            left: calc(50% - 12.5px);
+            z-index: 14;
+        }
+
+        .bottom::after {
+            content: "";
+            display: block;
+            height: 30px;
+            width: 30px;
+            background: #fff;
+            border-radius: 30px;
+            border: 5px solid black;
+            position: absolute;
+            top: -22.5px;
+            left: calc(50% - 20px);
+        }
+
+        .bottom {
+            border-bottom-left-radius: 600px;
+            border-bottom-right-radius: 600px;
+            background: #efefef;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 0%);
+            animation: botPop 2s ease-out;
+            opacity: 0;
+            z-index: 11;
+            border-top: 5px solid black;
+        }
+
+        img.poke {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: scale(2) translate(-25%, -50%);
+            z-index: 1;
+            animation: grow 2s ease-out forwards;
+        }
+
+        .poketainer {
+            opacity: 1;
+            animation: fadeOut 18s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            95% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        #name {
+            display: block;
+            font-family: 'Bungee';
+            z-index: 10;
+            width: 100vw;
+            color: #fff;
+            text-align: center;
+            animation: show 19s ease-in forwards;
+            font-size: 20px;
+            line-height: 25px;
+        }
+
+        @keyframes rotate {
+            from {
+                background-position: -3000px;
+            }
+
+            to {
+                background-position: 0px;
+            }
+        }
+
+        @keyframes show {
+            0% {
+                opacity: 0;
+            }
+
+            5% {
+                opacity: 0;
+            }
+
+            7% {
+                opacity: 1;
+            }
+
+            95% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes topPop {
+            0% {
+                top: 0;
+                left: 50%;
+                opacity: 1
+            }
+
+            40% {
+                top: 0;
+                left: 50%;
+                opacity: 1
+            }
+
+            100% {
+                top: -100px;
+                left: 20%;
+                opacity: 0
+            }
+        }
+
+        @keyframes botPop {
+            0% {
+                bottom: 0;
+                left: 50%;
+                opacity: 1
+            }
+
+            40% {
+                bottom: 0;
+                left: 50%;
+                opacity: 1
+            }
+
+            100% {
+                bottom: -100px;
+                left: 70%;
+                opacity: 0
+            }
+        }
+
+        @keyFrames inv {
+            0% {
+                opacity: 1
+            }
+
+            98% {
+                opacity: 1
+            }
+
+            100% {
+                opacity: 0;
+                background: pink
+            }
+        }
+
+        @keyframes grow {
+            0% {
+                transform: scale(0) translate(-10%, -50%);
+            }
+
+            40% {
+                transform: scale(0) translate(-10%, -50%);
+            }
+
+            75% {
+                transform: scale(3) translate(-10%, -50%);
+            }
+
+            100% {
+                transform: scale(3) translate(-10%, -50%);
+            }
+        }
+
+        @keyframes shineIn {
+            0% {
+                opacity: 0
+            }
+
+            40% {
+                opacity: 0
+            }
+
+            100% {
+                opacity: .5
+            }
+        }
+    </style>
+
+    <script>
+        window.console = window.console || function (t) { };
+    </script>
+
+
+
+    <style>
+        .ms-editor-squiggler {
+            display: none !important;
+            visibility: hidden !important
+        }
+
+        editor-card {
+            display: none !important;
+            opacity: 0 !important;
+            pointer-events: none;
+            visibility: hidden !important
+        }
+
+        .AsanaMain .TaskRow-taskName,
+        .AsanaMain .TaskName-input {
+            min-height: 21px !important
+        }
+
+        .SpellingErrorV2 {
+            background-image: none !important;
+            border-bottom: none !important;
+            pointer-events: none !important
+        }
+
+        @font-face {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 400;
+            src: local("Inter-Regular"), url("https://assets.merci-app.com/fonts/Inter-Regular.woff2") format("woff2"), url("https://assets.merci-app.com/fonts/Inter-Regular.woff2") format("woff")
+        }
+
+        @font-face {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 500;
+            src: local("Inter-Medium"), url("https://assets.merci-app.com/fonts/Inter-Medium.woff2") format("woff2"), url("https://assets.merci-app.com/fonts/Inter-Medium.woff") format("woff")
+        }
+
+        @font-face {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 600;
+            src: local("Inter-SemiBold"), url("https://assets.merci-app.com/fonts/Inter-SemiBold.woff2") format("woff2"), url("https://assets.merci-app.com/fonts/Inter-SemiBold.woff") format("woff")
+        }
+
+        @font-face {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 700;
+            src: local("Inter-Bold"), url("https://assets.merci-app.com/fonts/Inter-Bold.woff2") format("woff2"), url("https://assets.merci-app.com/fonts/Inter-Bold.woff") format("woff")
+        }
+
+        @font-face {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 800;
+            src: local("Inter-ExtraBold"), url("https://assets.merci-app.com/fonts/Inter-ExtraBold.woff2") format("woff2"), url("https://assets.merci-app.com/fonts/Inter-ExtraBold.woff") format("woff")
+        }
+
+        @font-face {
+            font-family: "Tropiline";
+            font-style: normal;
+            font-weight: 700;
+            src: local("Tropiline-Bold"), url("https://assets.merci-app.com/fonts/Tropiline-Bold.woff2") format("woff2"), url("https://assets.merci-app.com/fonts/Tropiline-Bold.woff") format("woff")
+        }
+
+        .kix-spellcheck-with-explanation-bubble,
+        .kix-spell-bubble {
+            display: none !important
+        }
+
+        #ReadingPaneContainerId .customScrollBar {
+            height: 100% !important;
+            transform: scale(1) !important;
+            width: 100% !important
+        }
+
+        .ms-font-s i[data-icon-name=ZoomIn] {
+            display: none
+        }
+
+        .ms-font-s i[data-icon-name=ZoomIn]+i[data-icon-name=ChevronDownRegular] {
+            display: none
+        }
+    </style>
+</head>
+
+<body translate="no" class="mci-c4f7c3b940b2fda375c61f1064b5e7f6" spellcheck="false"><span class="instruct">click to
+        throw a pokeball!</span>
+    <div class="ball">
+        <div class="top poke" src="https://www.pkparaiso.com/imagenes/xy/sprites/animados/ledyba.gif"></div>
+        <div class="bottom"></div>
+        <div class="poketainer"><img class="poke"
+                src="https://www.pkparaiso.com/imagenes/xy/sprites/animados/ledyba.gif"></div>
+    </div><span id="name"><span class="name">It's ledyba!</span></span>
+
+
+
+
+
+</body><editor-card style="position:absolute;top:0px;left:0px;z-index:auto;display: block !important">
+    <div dir="ltr" style="all: initial;">
+        <div
+            style="color: initial; font: initial; font-palette: initial; font-synthesis: initial; forced-color-adjust: initial; text-orientation: initial; text-rendering: initial; -webkit-font-smoothing: initial; -webkit-locale: initial; -webkit-text-orientation: initial; -webkit-writing-mode: initial; writing-mode: initial; zoom: initial; accent-color: initial; place-content: initial; place-items: initial; place-self: initial; alignment-baseline: initial; animation-composition: initial; animation: initial; app-region: initial; appearance: initial; aspect-ratio: initial; backdrop-filter: initial; backface-visibility: initial; background: initial; background-blend-mode: initial; baseline-shift: initial; baseline-source: initial; block-size: initial; border-block: initial; border: initial; border-radius: initial; border-collapse: initial; border-end-end-radius: initial; border-end-start-radius: initial; border-inline: initial; border-start-end-radius: initial; border-start-start-radius: initial; inset: initial; box-shadow: initial; box-sizing: initial; break-after: initial; break-before: initial; break-inside: initial; buffered-rendering: initial; caption-side: initial; caret-color: initial; clear: initial; clip: initial; clip-path: initial; clip-rule: initial; color-interpolation: initial; color-interpolation-filters: initial; color-rendering: initial; color-scheme: initial; columns: initial; column-fill: initial; gap: initial; column-rule: initial; column-span: initial; contain: initial; contain-intrinsic-block-size: initial; contain-intrinsic-size: initial; contain-intrinsic-inline-size: initial; container: initial; content: initial; content-visibility: initial; counter-increment: initial; counter-reset: initial; counter-set: initial; cursor: initial; cx: initial; cy: initial; d: initial; display: initial; dominant-baseline: initial; empty-cells: initial; fill: initial; fill-opacity: initial; fill-rule: initial; filter: initial; flex: initial; flex-flow: initial; float: initial; flood-color: initial; flood-opacity: initial; grid: initial; grid-area: initial; height: initial; hyphenate-character: initial; hyphenate-limit-chars: initial; hyphens: initial; image-orientation: initial; image-rendering: initial; initial-letter: initial; inline-size: initial; inset-block: initial; inset-inline: initial; isolation: initial; letter-spacing: initial; lighting-color: initial; line-break: initial; list-style: initial; margin-block: initial; margin: initial; margin-inline: initial; marker: initial; mask: initial; mask-type: initial; math-depth: initial; math-shift: initial; math-style: initial; max-block-size: initial; max-height: initial; max-inline-size: initial; max-width: initial; min-block-size: initial; min-height: initial; min-inline-size: initial; min-width: initial; mix-blend-mode: initial; object-fit: initial; object-position: initial; object-view-box: initial; offset: initial; opacity: initial; order: initial; orphans: initial; outline: initial; outline-offset: initial; overflow-anchor: initial; overflow-clip-margin: initial; overflow-wrap: initial; overflow: initial; overlay: initial; overscroll-behavior-block: initial; overscroll-behavior-inline: initial; overscroll-behavior: initial; padding-block: initial; padding: initial; padding-inline: initial; page: initial; page-orientation: initial; paint-order: initial; perspective: initial; perspective-origin: initial; pointer-events: initial; position: absolute; quotes: initial; r: initial; resize: initial; rotate: initial; ruby-position: initial; rx: initial; ry: initial; scale: initial; scroll-behavior: initial; scroll-margin-block: initial; scroll-margin: initial; scroll-margin-inline: initial; scroll-padding-block: initial; scroll-padding: initial; scroll-padding-inline: initial; scroll-snap-align: initial; scroll-snap-stop: initial; scroll-snap-type: initial; scroll-timeline: initial; scrollbar-gutter: initial; shape-image-threshold: initial; shape-margin: initial; shape-outside: initial; shape-rendering: initial; size: initial; speak: initial; stop-color: initial; stop-opacity: initial; stroke: initial; stroke-dasharray: initial; stroke-dashoffset: initial; stroke-linecap: initial; stroke-linejoin: initial; stroke-miterlimit: initial; stroke-opacity: initial; stroke-width: initial; tab-size: initial; table-layout: initial; text-align: initial; text-align-last: initial; text-anchor: initial; text-combine-upright: initial; text-decoration: initial; text-decoration-skip-ink: initial; text-emphasis: initial; text-emphasis-position: initial; text-indent: initial; text-overflow: initial; text-shadow: initial; text-size-adjust: initial; text-transform: initial; text-underline-offset: initial; text-underline-position: initial; white-space: initial; timeline-scope: initial; touch-action: initial; transform: initial; transform-box: initial; transform-origin: initial; transform-style: initial; transition: initial; translate: initial; user-select: initial; vector-effect: initial; vertical-align: initial; view-timeline: initial; view-transition-name: initial; visibility: initial; border-spacing: initial; -webkit-box-align: initial; -webkit-box-decoration-break: initial; -webkit-box-direction: initial; -webkit-box-flex: initial; -webkit-box-ordinal-group: initial; -webkit-box-orient: initial; -webkit-box-pack: initial; -webkit-box-reflect: initial; -webkit-line-break: initial; -webkit-line-clamp: initial; -webkit-mask-box-image: initial; -webkit-mask: initial; -webkit-mask-composite: initial; -webkit-print-color-adjust: initial; -webkit-rtl-ordering: initial; -webkit-ruby-position: initial; -webkit-tap-highlight-color: initial; -webkit-text-combine: initial; -webkit-text-decorations-in-effect: initial; -webkit-text-fill-color: initial; -webkit-text-security: initial; -webkit-text-stroke: initial; -webkit-user-drag: initial; -webkit-user-modify: initial; widows: initial; width: initial; will-change: initial; word-break: initial; word-spacing: initial; x: initial; y: initial; z-index: 2147483647;">
+            <link rel="stylesheet" href="chrome-extension://hokifickgkhplphjiodbggjmoafhignh/fonts/fabric-icons.css">
+            <div style="all: initial;"></div>
+        </div>
+        <div
+            style="color: initial; font: initial; font-palette: initial; font-synthesis: initial; forced-color-adjust: initial; text-orientation: initial; text-rendering: initial; -webkit-font-smoothing: initial; -webkit-locale: initial; -webkit-text-orientation: initial; -webkit-writing-mode: initial; writing-mode: initial; zoom: initial; accent-color: initial; place-content: initial; place-items: initial; place-self: initial; alignment-baseline: initial; animation-composition: initial; animation: initial; app-region: initial; appearance: initial; aspect-ratio: initial; backdrop-filter: initial; backface-visibility: initial; background: initial; background-blend-mode: initial; baseline-shift: initial; baseline-source: initial; block-size: initial; border-block: initial; border: initial; border-radius: initial; border-collapse: initial; border-end-end-radius: initial; border-end-start-radius: initial; border-inline: initial; border-start-end-radius: initial; border-start-start-radius: initial; inset: initial; box-shadow: initial; box-sizing: initial; break-after: initial; break-before: initial; break-inside: initial; buffered-rendering: initial; caption-side: initial; caret-color: initial; clear: initial; clip: initial; clip-path: initial; clip-rule: initial; color-interpolation: initial; color-interpolation-filters: initial; color-rendering: initial; color-scheme: initial; columns: initial; column-fill: initial; gap: initial; column-rule: initial; column-span: initial; contain: initial; contain-intrinsic-block-size: initial; contain-intrinsic-size: initial; contain-intrinsic-inline-size: initial; container: initial; content: initial; content-visibility: initial; counter-increment: initial; counter-reset: initial; counter-set: initial; cursor: initial; cx: initial; cy: initial; d: initial; display: initial; dominant-baseline: initial; empty-cells: initial; fill: initial; fill-opacity: initial; fill-rule: initial; filter: initial; flex: initial; flex-flow: initial; float: initial; flood-color: initial; flood-opacity: initial; grid: initial; grid-area: initial; height: initial; hyphenate-character: initial; hyphenate-limit-chars: initial; hyphens: initial; image-orientation: initial; image-rendering: initial; initial-letter: initial; inline-size: initial; inset-block: initial; inset-inline: initial; isolation: initial; letter-spacing: initial; lighting-color: initial; line-break: initial; list-style: initial; margin-block: initial; margin: initial; margin-inline: initial; marker: initial; mask: initial; mask-type: initial; math-depth: initial; math-shift: initial; math-style: initial; max-block-size: initial; max-height: initial; max-inline-size: initial; max-width: initial; min-block-size: initial; min-height: initial; min-inline-size: initial; min-width: initial; mix-blend-mode: initial; object-fit: initial; object-position: initial; object-view-box: initial; offset: initial; opacity: initial; order: initial; orphans: initial; outline: initial; outline-offset: initial; overflow-anchor: initial; overflow-clip-margin: initial; overflow-wrap: initial; overflow: initial; overlay: initial; overscroll-behavior-block: initial; overscroll-behavior-inline: initial; overscroll-behavior: initial; padding-block: initial; padding: initial; padding-inline: initial; page: initial; page-orientation: initial; paint-order: initial; perspective: initial; perspective-origin: initial; pointer-events: initial; position: absolute; quotes: initial; r: initial; resize: initial; rotate: initial; ruby-position: initial; rx: initial; ry: initial; scale: initial; scroll-behavior: initial; scroll-margin-block: initial; scroll-margin: initial; scroll-margin-inline: initial; scroll-padding-block: initial; scroll-padding: initial; scroll-padding-inline: initial; scroll-snap-align: initial; scroll-snap-stop: initial; scroll-snap-type: initial; scroll-timeline: initial; scrollbar-gutter: initial; shape-image-threshold: initial; shape-margin: initial; shape-outside: initial; shape-rendering: initial; size: initial; speak: initial; stop-color: initial; stop-opacity: initial; stroke: initial; stroke-dasharray: initial; stroke-dashoffset: initial; stroke-linecap: initial; stroke-linejoin: initial; stroke-miterlimit: initial; stroke-opacity: initial; stroke-width: initial; tab-size: initial; table-layout: initial; text-align: initial; text-align-last: initial; text-anchor: initial; text-combine-upright: initial; text-decoration: initial; text-decoration-skip-ink: initial; text-emphasis: initial; text-emphasis-position: initial; text-indent: initial; text-overflow: initial; text-shadow: initial; text-size-adjust: initial; text-transform: initial; text-underline-offset: initial; text-underline-position: initial; white-space: initial; timeline-scope: initial; touch-action: initial; transform: initial; transform-box: initial; transform-origin: initial; transform-style: initial; transition: initial; translate: initial; user-select: initial; vector-effect: initial; vertical-align: initial; view-timeline: initial; view-transition-name: initial; visibility: initial; border-spacing: initial; -webkit-box-align: initial; -webkit-box-decoration-break: initial; -webkit-box-direction: initial; -webkit-box-flex: initial; -webkit-box-ordinal-group: initial; -webkit-box-orient: initial; -webkit-box-pack: initial; -webkit-box-reflect: initial; -webkit-line-break: initial; -webkit-line-clamp: initial; -webkit-mask-box-image: initial; -webkit-mask: initial; -webkit-mask-composite: initial; -webkit-print-color-adjust: initial; -webkit-rtl-ordering: initial; -webkit-ruby-position: initial; -webkit-tap-highlight-color: initial; -webkit-text-combine: initial; -webkit-text-decorations-in-effect: initial; -webkit-text-fill-color: initial; -webkit-text-security: initial; -webkit-text-stroke: initial; -webkit-user-drag: initial; -webkit-user-modify: initial; widows: initial; width: initial; will-change: initial; word-break: initial; word-spacing: initial; x: initial; y: initial; z-index: 2147483647;">
+            <link rel="stylesheet" href="chrome-extension://hokifickgkhplphjiodbggjmoafhignh/fonts/fabric-icons.css">
+        </div>
+    </div>
+</editor-card>
+<script>function randomMon(){
+    $('body').html('');
+   var ai = Math.floor(Math.random() * 3) + 1;
+   var altImg = ""
+   if(ai != 1){
+     var altImg = "-" + ai;
+   }
+   var n = Math.floor(Math.random() * 802) + 1;
+   var s = Math.floor(Math.random() * 80) + 1;
+   var b = ['poke', 'great', 'ultra', 'master'];
+   var bb = b[Math.floor(Math.random() * b.length)];
+   var nn = n[Math.floor(Math.random() * n.length)];
+   var imgURL = "";
+   var dex = "";
+     
+   $('body').append(
+   '<span class="instruct">click to throw a pokeball!</span>' +
+   '<div class="ball">' +
+     '<div class="top"></div>' +
+     '<div class="bottom"></div>' +
+     '<div class="poketainer">' +
+   '<img class="poke" src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Checker-16x16.png"/>' +
+     '</div>' +
+   '</div>' +
+   '<span id="name"></span>'
+   )
+     
+   $('.top').addClass(bb);
+   
+   if (s == 2){
+     s = '-shiny'
+     $('.ball').append('<img class="shine" src="http://rs104.pbsrc.com/albums/m167/akami_kage/Gaia/premium_sparkle_CS.gif~c200" />')
+   }else{
+     s = ''
+   }
+   
+   if(n <= 721){
+     dex = "xy"
+   }else{
+     dex = "sol-luna"
+   }
+   
+   var names = [
+       "bulbasaur",
+       "ivysaur",
+       "venusaur",
+       "charmander",
+       "charmeleon",
+       "charizard",
+       "squirtle",
+       "wartortle",
+       "blastoise",
+       "caterpie",
+       "metapod",
+       "butterfree",
+       "weedle",
+       "kakuna",
+       "beedrill",
+       "pidgey",
+       "pidgeotto",
+       "pidgeot",
+       "rattata",
+       "raticate",
+       "spearow",
+       "fearow",
+       "ekans",
+       "arbok",
+       "pikachu",
+       "raichu",
+       "sandshrew",
+       "sandslash",
+       "nidoran♀",
+       "nidorina",
+       "nidoqueen",
+       "nidoran♂",
+       "nidorino",
+       "nidoking",
+       "clefairy",
+       "clefable",
+       "vulpix",
+       "ninetales",
+       "jigglypuff",
+       "wigglytuff",
+       "zubat",
+       "golbat",
+       "oddish",
+       "gloom",
+       "vileplume",
+       "paras",
+       "parasect",
+       "venonat",
+       "venomoth",
+       "diglett",
+       "dugtrio",
+       "meowth",
+       "persian",
+       "psyduck",
+       "golduck",
+       "mankey",
+       "primeape",
+       "growlithe",
+       "arcanine",
+       "poliwag",
+       "poliwhirl",
+       "poliwrath",
+       "abra",
+       "kadabra",
+       "alakazam",
+       "machop",
+       "machoke",
+       "machamp",
+       "bellsprout",
+       "weepinbell",
+       "victreebel",
+       "tentacool",
+       "tentacruel",
+       "geodude",
+       "graveler",
+       "golem",
+       "ponyta",
+       "rapidash",
+       "slowpoke",
+       "slowbro",
+       "magnemite",
+       "magneton",
+       "farfetchd",
+       "doduo",
+       "dodrio",
+       "seel",
+       "dewgong",
+       "grimer",
+       "muk",
+       "shellder",
+       "cloyster",
+       "gastly",
+       "haunter",
+       "gengar",
+       "onix",
+       "drowzee",
+       "hypno",
+       "krabby",
+       "kingler",
+       "voltorb",
+       "electrode",
+       "exeggcute",
+       "exeggutor",
+       "cubone",
+       "marowak",
+       "hitmonlee",
+       "hitmonchan",
+       "lickitung",
+       "koffing",
+       "weezing",
+       "rhyhorn",
+       "rhydon",
+       "chansey",
+       "tangela",
+       "kangaskhan",
+       "horsea",
+       "seadra",
+       "goldeen",
+       "seaking",
+       "staryu",
+       "starmie",
+       "mr. mime",
+       "scyther",
+       "jynx",
+       "electabuzz",
+       "magmar",
+       "pinsir",
+       "tauros",
+       "magikarp",
+       "gyarados",
+       "lapras",
+       "ditto",
+       "eevee",
+       "vaporeon",
+       "jolteon",
+       "flareon",
+       "porygon",
+       "omanyte",
+       "omastar",
+       "kabuto",
+       "kabutops",
+       "aerodactyl",
+       "snorlax",
+       "articuno",
+       "zapdos",
+       "moltres",
+       "dratini",
+       "dragonair",
+       "dragonite",
+       "mewtwo",
+       "mew",
+       "chikorita",
+       "bayleef",
+       "meganium",
+       "cyndaquil",
+       "quilava",
+       "typhlosion",
+       "totodile",
+       "croconaw",
+       "feraligatr",
+       "sentret",
+       "furret",
+       "hoothoot",
+       "noctowl",
+       "ledyba",
+       "ledian",
+       "spinarak",
+       "ariados",
+       "crobat",
+       "chinchou",
+       "lanturn",
+       "pichu",
+       "cleffa",
+       "igglybuff",
+       "togepi",
+       "togetic",
+       "natu",
+       "xatu",
+       "mareep",
+       "flaaffy",
+       "ampharos",
+       "bellossom",
+       "marill",
+       "azumarill",
+       "sudowoodo",
+       "politoed",
+       "hoppip",
+       "skiploom",
+       "jumpluff",
+       "aipom",
+       "sunkern",
+       "sunflora",
+       "yanma",
+       "wooper",
+       "quagsire",
+       "espeon",
+       "umbreon",
+       "murkrow",
+       "slowking",
+       "misdreavus",
+       "unown",
+       "wobbuffet",
+       "girafarig",
+       "pineco",
+       "forretress",
+       "dunsparce",
+       "gligar",
+       "steelix",
+       "snubbull",
+       "granbull",
+       "qwilfish",
+       "scizor",
+       "shuckle",
+       "heracross",
+       "sneasel",
+       "teddiursa",
+       "ursaring",
+       "slugma",
+       "magcargo",
+       "swinub",
+       "piloswine",
+       "corsola",
+       "remoraid",
+       "octillery",
+       "delibird",
+       "mantine",
+       "skarmory",
+       "houndour",
+       "houndoom",
+       "kingdra",
+       "phanpy",
+       "donphan",
+       "porygon2",
+       "stantler",
+       "smeargle",
+       "tyrogue",
+       "hitmontop",
+       "smoochum",
+       "elekid",
+       "magby",
+       "miltank",
+       "blissey",
+       "raikou",
+       "entei",
+       "suicune",
+       "larvitar",
+       "pupitar",
+       "tyranitar",
+       "lugia",
+       "ho-oh",
+       "celebi",
+       "treecko",
+       "grovyle",
+       "sceptile",
+       "torchic",
+       "combusken",
+       "blaziken",
+       "mudkip",
+       "marshtomp",
+       "swampert",
+       "poochyena",
+       "mightyena",
+       "zigzagoon",
+       "linoone",
+       "wurmple",
+       "silcoon",
+       "beautifly",
+       "cascoon",
+       "dustox",
+       "lotad",
+       "lombre",
+       "ludicolo",
+       "seedot",
+       "nuzleaf",
+       "shiftry",
+       "taillow",
+       "swellow",
+       "wingull",
+       "pelipper",
+       "ralts",
+       "kirlia",
+       "gardevoir",
+       "surskit",
+       "masquerain",
+       "shroomish",
+       "breloom",
+       "slakoth",
+       "vigoroth",
+       "slaking",
+       "nincada",
+       "ninjask",
+       "shedinja",
+       "whismur",
+       "loudred",
+       "exploud",
+       "makuhita",
+       "hariyama",
+       "azurill",
+       "nosepass",
+       "skitty",
+       "delcatty",
+       "sableye",
+       "mawile",
+       "aron",
+       "lairon",
+       "aggron",
+       "meditite",
+       "medicham",
+       "electrike",
+       "manectric",
+       "plusle",
+       "minun",
+       "volbeat",
+       "illumise",
+       "roselia",
+       "gulpin",
+       "swalot",
+       "carvanha",
+       "sharpedo",
+       "wailmer",
+       "wailord",
+       "numel",
+       "camerupt",
+       "torkoal",
+       "spoink",
+       "grumpig",
+       "spinda",
+       "trapinch",
+       "vibrava",
+       "flygon",
+       "cacnea",
+       "cacturne",
+       "swablu",
+       "altaria",
+       "zangoose",
+       "seviper",
+       "lunatone",
+       "solrock",
+       "barboach",
+       "whiscash",
+       "corphish",
+       "crawdaunt",
+       "baltoy",
+       "claydol",
+       "lileep",
+       "cradily",
+       "anorith",
+       "armaldo",
+       "feebas",
+       "milotic",
+       "castform",
+       "kecleon",
+       "shuppet",
+       "banette",
+       "duskull",
+       "dusclops",
+       "tropius",
+       "chimecho",
+       "absol",
+       "wynaut",
+       "snorunt",
+       "glalie",
+       "spheal",
+       "sealeo",
+       "walrein",
+       "clamperl",
+       "huntail",
+       "gorebyss",
+       "relicanth",
+       "luvdisc",
+       "bagon",
+       "shelgon",
+       "salamence",
+       "beldum",
+       "metang",
+       "metagross",
+       "regirock",
+       "regice",
+       "registeel",
+       "latias",
+       "latios",
+       "kyogre",
+       "groudon",
+       "rayquaza",
+       "jirachi",
+       "deoxys",
+       "turtwig",
+       "grotle",
+       "torterra",
+       "chimchar",
+       "monferno",
+       "infernape",
+       "piplup",
+       "prinplup",
+       "empoleon",
+       "starly",
+       "staravia",
+       "staraptor",
+       "bidoof",
+       "bibarel",
+       "kricketot",
+       "kricketune",
+       "shinx",
+       "luxio",
+       "luxray",
+       "budew",
+       "roserade",
+       "cranidos",
+       "rampardos",
+       "shieldon",
+       "bastiodon",
+       "burmy",
+       "wormadam",
+       "mothim",
+       "combee",
+       "vespiquen",
+       "pachirisu",
+       "buizel",
+       "floatzel",
+       "cherubi",
+       "cherrim",
+       "shellos",
+       "gastrodon",
+       "ambipom",
+       "drifloon",
+       "drifblim",
+       "buneary",
+       "lopunny",
+       "mismagius",
+       "honchkrow",
+       "glameow",
+       "purugly",
+       "chingling",
+       "stunky",
+       "skuntank",
+       "bronzor",
+       "bronzong",
+       "bonsly",
+       "mime jr.",
+       "happiny",
+       "chatot",
+       "spiritomb",
+       "gible",
+       "gabite",
+       "garchomp",
+       "munchlax",
+       "riolu",
+       "lucario",
+       "hippopotas",
+       "hippowdon",
+       "skorupi",
+       "drapion",
+       "croagunk",
+       "toxicroak",
+       "carnivine",
+       "finneon",
+       "lumineon",
+       "mantyke",
+       "snover",
+       "abomasnow",
+       "weavile",
+       "magnezone",
+       "lickilicky",
+       "rhyperior",
+       "tangrowth",
+       "electivire",
+       "magmortar",
+       "togekiss",
+       "yanmega",
+       "leafeon",
+       "glaceon",
+       "gliscor",
+       "mamoswine",
+       "porygon-z",
+       "gallade",
+       "probopass",
+       "dusknoir",
+       "froslass",
+       "rotom",
+       "uxie",
+       "mesprit",
+       "azelf",
+       "dialga",
+       "palkia",
+       "heatran",
+       "regigigas",
+       "giratina",
+       "cresselia",
+       "phione",
+       "manaphy",
+       "darkrai",
+       "shaymin",
+       "arceus",
+       "victini",
+       "snivy",
+       "servine",
+       "serperior",
+       "tepig",
+       "pignite",
+       "emboar",
+       "oshawott",
+       "dewott",
+       "samurott",
+       "patrat",
+       "watchog",
+       "lillipup",
+       "herdier",
+       "stoutland",
+       "purrloin",
+       "liepard",
+       "pansage",
+       "simisage",
+       "pansear",
+       "simisear",
+       "panpour",
+       "simipour",
+       "munna",
+       "musharna",
+       "pidove",
+       "tranquill",
+       "unfezant",
+       "blitzle",
+       "zebstrika",
+       "roggenrola",
+       "boldore",
+       "gigalith",
+       "woobat",
+       "swoobat",
+       "drilbur",
+       "excadrill",
+       "audino",
+       "timburr",
+       "gurdurr",
+       "conkeldurr",
+       "tympole",
+       "palpitoad",
+       "seismitoad",
+       "throh",
+       "sawk",
+       "sewaddle",
+       "swadloon",
+       "leavanny",
+       "venipede",
+       "whirlipede",
+       "scolipede",
+       "cottonee",
+       "whimsicott",
+       "petilil",
+       "lilligant",
+       "basculin",
+       "sandile",
+       "krokorok",
+       "krookodile",
+       "darumaka",
+       "darmanitan",
+       "maractus",
+       "dwebble",
+       "crustle",
+       "scraggy",
+       "scrafty",
+       "sigilyph",
+       "yamask",
+       "cofagrigus",
+       "tirtouga",
+       "carracosta",
+       "archen",
+       "archeops",
+       "trubbish",
+       "garbodor",
+       "zorua",
+       "zoroark",
+       "minccino",
+       "cinccino",
+       "gothita",
+       "gothorita",
+       "gothitelle",
+       "solosis",
+       "duosion",
+       "reuniclus",
+       "ducklett",
+       "swanna",
+       "vanillite",
+       "vanillish",
+       "vanilluxe",
+       "deerling",
+       "sawsbuck",
+       "emolga",
+       "karrablast",
+       "escavalier",
+       "foongus",
+       "amoonguss",
+       "frillish",
+       "jellicent",
+       "alomomola",
+       "joltik",
+       "galvantula",
+       "ferroseed",
+       "ferrothorn",
+       "klink",
+       "klang",
+       "klinklang",
+       "tynamo",
+       "eelektrik",
+       "eelektross",
+       "elgyem",
+       "beheeyem",
+       "litwick",
+       "lampent",
+       "chandelure",
+       "axew",
+       "fraxure",
+       "haxorus",
+       "cubchoo",
+       "beartic",
+       "cryogonal",
+       "shelmet",
+       "accelgor",
+       "stunfisk",
+       "mienfoo",
+       "mienshao",
+       "druddigon",
+       "golett",
+       "golurk",
+       "pawniard",
+       "bisharp",
+       "bouffalant",
+       "rufflet",
+       "braviary",
+       "vullaby",
+       "mandibuzz",
+       "heatmor",
+       "durant",
+       "deino",
+       "zweilous",
+       "hydreigon",
+       "larvesta",
+       "volcarona",
+       "cobalion",
+       "terrakion",
+       "virizion",
+       "tornadus",
+       "thundurus",
+       "reshiram",
+       "zekrom",
+       "landorus",
+       "kyurem",
+       "keldeo",
+       "meloetta",
+       "genesect",
+       "chespin",
+       "quilladin",
+       "chesnaught",
+       "fennekin",
+       "braixen",
+       "delphox",
+       "froakie",
+       "frogadier",
+       "greninja",
+       "bunnelby",
+       "diggersby",
+       "fletchling",
+       "fletchinder",
+       "talonflame",
+       "scatterbug",
+       "spewpa",
+       "vivillon",
+       "litleo",
+       "pyroar",
+       "flabebe",
+       "floette",
+       "florges",
+       "skiddo",
+       "gogoat",
+       "pancham",
+       "pangoro",
+       "furfrou",
+       "espurr",
+       "meowstic",
+       "honedge",
+       "doublade",
+       "aegislash",
+       "spritzee",
+       "aromatisse",
+       "swirlix",
+       "slurpuff",
+       "inkay",
+       "malamar",
+       "binacle",
+       "barbaracle",
+       "skrelp",
+       "dragalge",
+       "clauncher",
+       "clawitzer",
+       "helioptile",
+       "heliolisk",
+       "tyrunt",
+       "tyrantrum",
+       "amaura",
+       "aurorus",
+       "sylveon",
+       "hawlucha",
+       "dedenne",
+       "carbink",
+       "goomy",
+       "sliggoo",
+       "goodra",
+       "klefki",
+       "phantump",
+       "trevenant",
+       "pumpkaboo",
+       "gourgeist",
+       "bergmite",
+       "avalugg",
+       "noibat",
+       "noivern",
+       "xerneas",
+       "yveltal",
+       "zygarde",
+       "diancie",
+       "hoopa",
+       "volcanion",
+       "rowlet",
+       "dartrix",
+       "decidueye",
+       "litten",
+       "torracat",
+       "incineroar",
+       "popplio",
+       "brionne",
+       "primarina",
+       "pikipek",
+       "trumbeak",
+       "toucannon",
+       "yungoos",
+       "gumshoos",
+       "grubbin",
+       "charjabug",
+       "vikavolt",
+       "crabrawler",
+       "crabominable",
+       "oricorio",
+       "cutiefly",
+       "ribombee",
+       "rockruff",
+       "lycanroc",
+       "wishiwashi",
+       "mareanie",
+       "toxapex",
+       "mudbray",
+       "mudsdale",
+       "dewpider",
+       "araquanid",
+       "fomantis",
+       "lurantis",
+       "morelull",
+       "shiinotic",
+       "salandit",
+       "salazzle",
+       "stufful",
+       "bewear",
+       "bounsweet",
+       "steenee",
+       "tsareena",
+       "comfey",
+       "oranguru",
+       "passimian",
+       "wimpod",
+       "golisopod",
+       "sandygast",
+       "palossand",
+       "pyukumuku",
+       "type: null",
+       "silvally",
+       "minior",
+       "komala",
+       "turtonator",
+       "togedemaru",
+       "mimikyu",
+       "bruxish",
+       "drampa",
+       "dhelmise",
+       "jangmo-o",
+       "hakamo-o",
+       "kommo-o",
+       "tapu_koko",
+       "tapu_lele",
+       "tapu_bulu",
+       "tapu_fini",
+       "cosmog",
+       "cosmoem",
+       "solgaleo",
+       "lunala",
+       "nihilego",
+       "buzzwole",
+       "pheromosa",
+       "xurkitree",
+       "celesteela",
+       "kartana",
+       "guzzlord",
+       "necrozma",
+       "magearna",
+       "marshadow"
+   ]
+   
+   
+   
+   $('#name').append('<span class="name">It\'s ' + names[n - 1] + '!</span>');
+   
+   testImage('https://www.pkparaiso.com/imagenes/' + dex + '/sprites/animados' + s + '/' + names[n - 1] + altImg + '.gif');
+   
+   function testImage(URL) {
+       var tester=new Image();
+       tester.onload=imageFound(URL);
+       tester.onerror=imageNotFound;
+       tester.src=URL;
+   }
+   
+   function imageFound(URL) {
+       imgURL = URL;
+     console.log(imgURL);
+       $('.poke').attr('src', imgURL);
+   }
+   
+   function imageNotFound() {
+         imgURL = 'https://www.pkparaiso.com/imagenes/' + dex + '/sprites/animados' + s + '/' + names[n - 1] + '.gif';
+     console.log(imgURL);
+         $('.poke').attr('src', imgURL).on('error', function(){
+             this.src = 'https://vignette2.wikia.nocookie.net/mcleodgaming/images/d/d8/MissingNo..png/revision/latest?cb=20131108185400'; document.getElementById('name').innerHTML = 'MISSINGNO'
+           }    
+         );
+   }
+   }
+   
+   randomMon();
+   
+   $(document).on('click', randomMon)
+   
+   
+   
+   
+   </script>
+</html>
