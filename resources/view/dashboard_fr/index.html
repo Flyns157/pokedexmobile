@@ -8,7 +8,7 @@
 <div class="icenter">
     <!--SEE : https://codepen.io/supah/pen/XdKMJK-->
     <div id="search-zone">
-        <form class="search-form" form method="POST" action="/fr">
+        <form class="search-form" form method="POST" action="/search">
             {{ form.csrf_token }}
             {{ form.recherche(class="search-input") }}
             <button type="submit" class="search-button">

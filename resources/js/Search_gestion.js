@@ -4,7 +4,7 @@ $(document).ready(function () {
         var query = $(this).val();
         if (query) {
             $.ajax({
-                url: '/search',
+                url: '/suggest',
                 data: { 'query': query },
                 success: function (data) {
                     var suggestions = $('#suggestions');

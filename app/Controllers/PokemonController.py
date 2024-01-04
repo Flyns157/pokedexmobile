@@ -13,10 +13,6 @@ search_engine.ECO = True
 # Display a listing of the resource.
 def index():
     poke_name_form = SearchForm()
-    if poke_name_form.validate_on_submit():
-        search_result = search_engine.search(poke_name_form.recherche.data,'fr')[0]
-        debug_sys.log('SEARCH',f'''{poke_name_form.recherche.data} => {search_result}''')
-        return redirect(url_for('fr', id = search_result))
     return render_template('dashboard_fr/index.html', form = poke_name_form)
 
 
@@ -56,6 +52,15 @@ def destroy(id):abort(404)
 
 
 def search():
+    poke_name_form = SearchForm()
+    if poke_name_form.validate_on_submit():
+        search_result = search_engine.search(poke_name_form.recherche.data,'fr')[0]
+        debug_sys.log('SEARCH',f'''{poke_name_form.recherche.data} => {search_result}''')
+        return redirect(url_for('fr', id = search_result))
+    else:
+        abort(404)
+
+def suggest():
     query = request.args.get('query')
     suggestions = []
     for id in search_engine.search(query,'fr')[:MAX_SUGGESTION]:

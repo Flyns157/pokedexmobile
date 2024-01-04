@@ -25,17 +25,15 @@ def basic_format(input_str : str):return unidecode(input_str.lower())
 # routes are loaded by the RouteServiceProvider and all of them will
 # be assigned to the "web" middleware group. Make something great!
 @app.route('/')
-def index():return redirect(url_for('fr'))
-
-@app.route('/search', methods=['GET'])
+def home():return redirect(url_for('fr'))
+@app.route('/suggest', methods=['POST'])
+def suggest():PokemonController.suggest()
+@app.route('/search', methods=['POST'])
 def search():PokemonController.search()
 
 
 Route.resource('/fr',PokemonController)
-Route.resource('/data',EmployeeController)
+# Route.resource('/data',EmployeeController)
 
 
 app.run(host='localhost', port=5000)
-
-# DEV Help
-if __name__ == '__main__': app.run(debug=True)
