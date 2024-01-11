@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/css/search-bar_style.css">
+<link rel="stylesheet" href="/css/pokemon_style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/login.css">
+<title>Login</title>
+{% endblock %}
+
+{% block content %}
+  <body>
+    <div class="login-page">
+      <div class="form">
+        <div class="login">
+          <div class="login-header">
+            <h3>Register</h3>
+          </div>
+        </div>
+        <form class="login-form" action="/register" method="post">
+
+            <h2 class="text" >Poke Register</h2>
+
+            <h3 class="strong" >{{info}} </h3>
+
+            <input class="txt_field" type="text" value="" placeholder="Username" id="username" required/>
+            <input class="txt_field" type="text" value="" placeholder="Email" id="email" required/>
+            <input class="txt_field" type="password" value="" placeholder="Password" id="password" required/>
+
+            <button value="Register">Submit</button>
+        </form>
+      </div>
+    </div>
+{% endblock %}

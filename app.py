@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired
 from wtforms import StringField, IntegerField
 import requests
 from unidecode import unidecode
-# personnal modules
+# personnal modulespython3 -m pip uninstall flask-wtf wtforms flask jinja2 click werkzeug markupsafe itsdangerouspip install Flask-WTF
 import search_engine
 search_engine.ECO = True
 import debug_sys
@@ -45,6 +45,17 @@ def returnLogin():
                                   info='Invalid User Or Password !')
     else:
         return render_template('form_login.html')
+
+@app.route('/Register')
+def register():
+    return render_template('register.html')
+
+@app.route('/form_register', methods=['POST', 'GET'])
+def returnRegister():
+    name = request.form['username']
+    pwd = request.form['password']
+    email = request.form['email']
+    return render_template('register.html')
 
 
 if __name__ == '__main__':
