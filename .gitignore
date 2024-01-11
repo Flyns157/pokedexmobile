@@ -4,5 +4,4 @@ __pycache__/
 .vscode/
 users.db
 gaza.log
-*.css
 *.ipynb
