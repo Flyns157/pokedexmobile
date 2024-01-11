@@ -1,0 +1,85 @@
+$base-color: hsl(203, 77%, 81%);
+$selection-color: hsl(203, 77%, 61%);
+$nb-max-img: 10;
+
+.caroussel_diapo {
+    input {
+        display: none;
+    }
+
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+
+    input[type="radio"] + label {
+        cursor: pointer;
+        background-color: $base-color;
+        display: inline-block;
+        width: 20px;
+        border-radius: 50%;
+        height: 20px;
+    }
+
+    input[type="radio"]:checked + label {
+        background-color: $selection-color;
+    }
+
+    @for $i from 1 through $nb-max-img {
+        #carou_#{$i}:checked ~ .contenu_carou .caroussel {
+            transform: translateZ(-540px) rotateY(-45deg * ($i - 1));
+
+            &div:nth-child(#{$i}) {
+                transform: rotateY(45deg * ($i - 1)) translateZ(540px) scale(1);
+            }
+        }
+    }
+}
+
+.contenu_carou {
+    width: 500px;
+    height: 332px;
+    margin: 2rem auto;
+    perspective: 1000px;
+}
+
+.caroussel {
+    position: relative;
+    transform-style: preserve-3d;
+    width: 500px;
+    height: 332px;
+    transition: 0.5s transform;
+    padding-left: 11%;
+    // display: flex;
+
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        outline: 1px solid transparent;
+        backface-visibility: hidden;
+        will-change: transform;
+        transition: 1s transform;
+
+        height: 100%;
+    }
+
+    div {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        @for $i from 1 through $nb-max-img {
+            &:nth-child(#{$i}) {
+                transform: rotateY((45deg * ($i - 1))) translateZ(540px) scale(0.8);
+            }
+        }
+    }
+}
+
+.caroussel_diapo {
+    border: solid 3px black;
+    * {
+        border: solid 3px black;
+    }
+}
