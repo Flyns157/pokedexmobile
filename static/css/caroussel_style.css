@@ -1,0 +1,145 @@
+.caroussel_diapo {
+	 text-align: center;
+	 margin: 0 auto;
+	 padding: 20px;
+}
+ .caroussel_diapo input {
+	 display: none;
+}
+ .caroussel_diapo input[type="radio"] + label {
+	 cursor: pointer;
+	 background-color: #a9d7f4;
+	 display: inline-block;
+	 width: 20px;
+	 border-radius: 50%;
+	 height: 20px;
+}
+ .caroussel_diapo input[type="radio"]:checked + label {
+	 background-color: #4fade8;
+}
+ .caroussel_diapo #carou_1:checked ~ .contenu_carou .caroussel {
+	 transform: translateZ(-540px) rotateY(0deg);
+}
+ .caroussel_diapo #carou_1:checked ~ .contenu_carou .carousseldiv:nth-child(1) {
+	 transform: rotateY(0deg) translateZ(540px) scale(1);
+}
+ .caroussel_diapo #carou_2:checked ~ .contenu_carou .caroussel {
+	 transform: translateZ(-540px) rotateY(-45deg);
+}
+ .caroussel_diapo #carou_2:checked ~ .contenu_carou .carousseldiv:nth-child(2) {
+	 transform: rotateY(45deg) translateZ(540px) scale(1);
+}
+ .caroussel_diapo #carou_3:checked ~ .contenu_carou .caroussel {
+	 transform: translateZ(-540px) rotateY(-90deg);
+}
+ .caroussel_diapo #carou_3:checked ~ .contenu_carou .carousseldiv:nth-child(3) {
+	 transform: rotateY(90deg) translateZ(540px) scale(1);
+}
+ .caroussel_diapo #carou_4:checked ~ .contenu_carou .caroussel {
+	 transform: translateZ(-540px) rotateY(-135deg);
+}
+ .caroussel_diapo #carou_4:checked ~ .contenu_carou .carousseldiv:nth-child(4) {
+	 transform: rotateY(135deg) translateZ(540px) scale(1);
+}
+ .caroussel_diapo #carou_5:checked ~ .contenu_carou .caroussel {
+	 transform: translateZ(-540px) rotateY(-180deg);
+}
+ .caroussel_diapo #carou_5:checked ~ .contenu_carou .carousseldiv:nth-child(5) {
+	 transform: rotateY(180deg) translateZ(540px) scale(1);
+}
+ .caroussel_diapo #carou_6:checked ~ .contenu_carou .caroussel {
+	 transform: translateZ(-540px) rotateY(-225deg);
+}
+ .caroussel_diapo #carou_6:checked ~ .contenu_carou .carousseldiv:nth-child(6) {
+	 transform: rotateY(225deg) translateZ(540px) scale(1);
+}
+ .caroussel_diapo #carou_7:checked ~ .contenu_carou .caroussel {
+	 transform: translateZ(-540px) rotateY(-270deg);
+}
+ .caroussel_diapo #carou_7:checked ~ .contenu_carou .carousseldiv:nth-child(7) {
+	 transform: rotateY(270deg) translateZ(540px) scale(1);
+}
+ .caroussel_diapo #carou_8:checked ~ .contenu_carou .caroussel {
+	 transform: translateZ(-540px) rotateY(-315deg);
+}
+ .caroussel_diapo #carou_8:checked ~ .contenu_carou .carousseldiv:nth-child(8) {
+	 transform: rotateY(315deg) translateZ(540px) scale(1);
+}
+ .caroussel_diapo #carou_9:checked ~ .contenu_carou .caroussel {
+	 transform: translateZ(-540px) rotateY(-360deg);
+}
+ .caroussel_diapo #carou_9:checked ~ .contenu_carou .carousseldiv:nth-child(9) {
+	 transform: rotateY(360deg) translateZ(540px) scale(1);
+}
+ .caroussel_diapo #carou_10:checked ~ .contenu_carou .caroussel {
+	 transform: translateZ(-540px) rotateY(-405deg);
+}
+ .caroussel_diapo #carou_10:checked ~ .contenu_carou .carousseldiv:nth-child(10) {
+	 transform: rotateY(405deg) translateZ(540px) scale(1);
+}
+ .contenu_carou {
+	 width: 500px;
+	 height: 332px;
+	 margin: 2rem auto;
+	 perspective: 1000px;
+}
+ .caroussel {
+	 position: relative;
+	 transform-style: preserve-3d;
+	 width: 500px;
+	 height: 332px;
+	 transition: 0.5s transform;
+	 padding-left: 11%;
+}
+ .caroussel img {
+	 position: absolute;
+	 top: 0;
+	 left: 0;
+	 outline: 1px solid transparent;
+	 backface-visibility: hidden;
+	 will-change: transform;
+	 transition: 1s transform;
+	 height: 100%;
+}
+ .caroussel div {
+	 height: 100%;
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+}
+ .caroussel div:nth-child(1) {
+	 transform: rotateY(0deg) translateZ(540px) scale(0.8);
+}
+ .caroussel div:nth-child(2) {
+	 transform: rotateY(45deg) translateZ(540px) scale(0.8);
+}
+ .caroussel div:nth-child(3) {
+	 transform: rotateY(90deg) translateZ(540px) scale(0.8);
+}
+ .caroussel div:nth-child(4) {
+	 transform: rotateY(135deg) translateZ(540px) scale(0.8);
+}
+ .caroussel div:nth-child(5) {
+	 transform: rotateY(180deg) translateZ(540px) scale(0.8);
+}
+ .caroussel div:nth-child(6) {
+	 transform: rotateY(225deg) translateZ(540px) scale(0.8);
+}
+ .caroussel div:nth-child(7) {
+	 transform: rotateY(270deg) translateZ(540px) scale(0.8);
+}
+ .caroussel div:nth-child(8) {
+	 transform: rotateY(315deg) translateZ(540px) scale(0.8);
+}
+ .caroussel div:nth-child(9) {
+	 transform: rotateY(360deg) translateZ(540px) scale(0.8);
+}
+ .caroussel div:nth-child(10) {
+	 transform: rotateY(405deg) translateZ(540px) scale(0.8);
+}
+ .caroussel_diapo {
+	 border: solid 3px black;
+}
+ .caroussel_diapo * {
+	 border: solid 3px black;
+}

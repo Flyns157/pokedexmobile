@@ -113,8 +113,8 @@
             {% if poke_infos.sprites.gmax %}
             <img src="" alt="Gmax regular sprite selector">
             {% endif %}
-            {% for mega in poke_infos.evolution.mega %}
-                <img src="{{ mega.orbe|whatMega }}" alt="">
+            {% for mega in (poke_infos.evolution.mega or []) %}
+                <img src="{{ mega.orbe }}" alt="">
             {% endfor %}
         </div>
     </div>
