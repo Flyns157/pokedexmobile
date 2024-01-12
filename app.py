@@ -2,13 +2,14 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
-from wtforms import StringField, IntegerField
-import requests
+from wtforms import StringField
 from unidecode import unidecode
+from flask_login import LoginManager,login_user, logout_user, login_required
 # personnal modules
 import search_engine
 search_engine.ECO = True
 import debug_sys
+import User
 
 
 #=============================== INIT ZONE ===============================
@@ -34,8 +35,7 @@ if __name__ == '__main__':
 
 
 @app.template_filter('basic_format')
-def basic_format(input_str : str):
-    return unidecode(input_str.lower())
+def basic_format(input_str : str):return unidecode(input_str.lower())
 
 #=============================== MAIN ZONE ===============================
 @app.route('/')
@@ -92,3 +92,31 @@ def search():
         suggestions.append((information['name']['fr'],id,information['sprites']['regular']))
     debug_sys.log('SUGGEST', f'query={query} : ' + str(suggestions))
     return jsonify(suggestions)
+
+
+login = LoginManager(app)
+
+@login.user_loader
+def load_user(id):
+    return User.User.query.get(int(id))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        user = User.User.query.filter_by(username=request.form['username']).first()
+        if user is None or not user.check_password(request.form['password']):
+            return 'Invalid username or password'
+        login_user(user)
+        return 'Logged in successfully'
+    return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return 'Logged out successfully'
+
+@app.route('/profile')
+@login_required
+def profile():
+    return 'Welcome to your profile!'
