@@ -36,8 +36,10 @@
 }
  .header img {
 	 width: 18rem;
-	 margin: 1rem 1rem 1rem 5rem;
+	 margin: 1rem 1rem 1rem 2rem;
 	 z-index: 1000;
+	 max-width: 100%;
+    height: auto;
 }
  .navbar {
 	 margin-right: 3rem;
@@ -51,7 +53,7 @@
 	 color: white;
 	 list-style: none;
 	 text-decoration: none;
-	 margin: 2rem 1.5rem;
+	 margin: 2rem 1rem;
 	 transition: 0.5s ease;
 	 width: 110px;
 	 height: 20px;

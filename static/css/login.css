@@ -62,13 +62,6 @@ margin-top: 4px;
   text-decoration: none;
 }
 
-.container {
-  position: relative;
-  z-index: 1;
-  max-width: 300px;
-  margin: 0 auto;
-}
-
 body {
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
