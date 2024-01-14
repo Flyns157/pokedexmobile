@@ -18,9 +18,14 @@
         </a>
         <nav class="navbar">
             <a href="/">Accueil</a>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="{{ url_for('favoris') }}">Favoris</a>
+            {% else %}
             <a href="/Login">Se connecter</a>
             <a href="/Register">S'inscrire</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+
         </nav>
     </header>
     {% endblock %}

@@ -1,7 +1,7 @@
 # =============================== IMPORTS ZONE ===============================
 import sqlite3
 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, flash
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length, InputRequired, ValidationError
@@ -45,6 +45,10 @@ class SearchForm(FlaskForm):
 
 database = {'Alexandra': 'Vallet'}
 
+@app.route('/favoris', methods=["GET", "POST"])
+@login_required
+def favoris():
+    return render_template('favoris.html')
 
 @app.route('/Login', methods=["GET", "POST"])
 def login():
@@ -66,6 +70,7 @@ def dashboard():
 @app.route('/logout', methods=["GET", "POST"])
 def logout():
     logout_user()
+    flash("Tu as été déconnecté !")
     return redirect(url_for('login'))
 
 @app.route('/form_login', methods=['POST', 'GET'])
