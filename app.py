@@ -48,7 +48,30 @@ database = {'Alexandra': 'Vallet'}
 @app.route('/favoris', methods=["GET", "POST"])
 @login_required
 def favoris():
-    return render_template('favoris.html')
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    poke = cur.execute("SELECT * FROM avoris WHERE id_user="+current_user.get_id()).fetchall()
+    conn.commit()
+    pokemons = []
+    for pokemon in poke :
+        pokemons.append(search_engine.infos_on(pokemon[2]))
+    cur.close()
+    conn.close()
+    return render_template('favoris.html',pokemons=pokemons)
+
+
+
+@app.route('/addFavoris/<id>',methods=["GET", "POST"])
+@login_required
+def addFavoris(id):
+    conn = sqlite3.connect('database.db')
+    cur = conn.cursor()
+    cur.execute("INSERT INTO avoris(id_user,id_pokemon) VALUES ("+current_user.get_id()+","+id+")")
+    conn.commit()
+    cur.close()
+    conn.close()
+    return redirect(url_for('pokemon_view',id=id))
+
 
 @app.route('/Login', methods=["GET", "POST"])
 def login():

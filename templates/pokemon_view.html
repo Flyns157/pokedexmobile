@@ -120,6 +120,7 @@
     </div>
     <div class="data">
         <h1>{{ poke_infos.name.fr }} ({{ poke_infos.name.en }} / {{ poke_infos.name.jp }})</h1>
+        <a href="{{ url_for("addFavoris",id=poke_infos.pokedexId) }}">Ajouter aux favoris</a>
         <div>
             {% for type in poke_infos.types %}
             <img src="{{ type.image }}" alt="{{ type.name }}">

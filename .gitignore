@@ -3,5 +3,5 @@ __pycache__/
 .idea/
 .vscode/
 users.db
-gaza.log
+log.log
 *.ipynb

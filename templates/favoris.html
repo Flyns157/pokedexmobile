@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/img/pokemon-aller.png">
+    <title>Mes favoris</title>
+</head>
+<body>
+{% for poke in pokemons %}
+    <div>
+        <p><a href="{{ url_for("pokemon_view",id=poke['pokedexId']) }}">{{ poke['name']['fr'] }} | {{ poke['name']['en'] }} | {{ poke['name']['jp'] }}</a></p>
+        <img src="{{ poke['sprites']['regular'] }}" id="favPoke">
+    </div>
+{% endfor %}
+</body>
+</html>
