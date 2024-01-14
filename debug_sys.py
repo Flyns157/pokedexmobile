@@ -7,7 +7,7 @@ from datetime import datetime
 
 num_log = 0
 # suppression des logs
-tmp = open('gaza.log', 'w')
+tmp = open('log.log', 'w')
 tmp.write(f'({num_log}) : {datetime.now()} : INIT : server start\n')
 tmp.close()
 
@@ -28,7 +28,7 @@ def log(type : str, content : str, content_size_limit : int = 150, file : str = 
         content_size_limit (int, optional): La limite de taille du contenu du message. 
                                             Par défaut, elle est fixée à 150 caractères.
         file (str, optional): Le nom du fichier journal dans lequel enregistrer le message. 
-                              Par défaut, il est fixé à 'gaza.log'.
+                              Par défaut, il est fixé à 'log.log'.
     
     Retourne:
         None

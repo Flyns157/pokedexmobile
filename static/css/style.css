@@ -11,6 +11,10 @@
 	 width: 100%;
 	 background-size: cover;
 }
+
+ #favPoke{
+	 width: 10%;
+ }
  .icenter {
 	 align-items: center;
 	 background-image: url("../img/index_back4.jpg");
