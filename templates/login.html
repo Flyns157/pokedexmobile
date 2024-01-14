@@ -17,16 +17,11 @@
             <h3>Login</h3>
           </div>
         </div>
-        <form class="login-form" action="/form_login" method="post">
-
-            <h2 class="text" >Poke Login</h2>
-
-            <h3 class="strong" >{{info}} </h3>
-
-            <input class="txt_field" type="text" value="" placeholder="Username" id="username" required/>
-            <input class="txt_field" type="password" value="" placeholder="Password" id="password" required/>
-
-            <button value="Login">Submit</button>
+        <form class="login-form" action="" method="post">
+            {{form.hidden_tag()}}
+            {{form.username}}
+            {{form.password}}
+            {{form.submit}}
         </form>
       </div>
     </div>

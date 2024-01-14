@@ -17,17 +17,11 @@
             <h3>Register</h3>
           </div>
         </div>
-        <form class="login-form" action="/register" method="post">
-
-            <h2 class="text" >Poke Register</h2>
-
-            <h3 class="strong" >{{info}} </h3>
-
-            <input class="txt_field" type="text" value="" placeholder="Username" id="username" required/>
-            <input class="txt_field" type="text" value="" placeholder="Email" id="email" required/>
-            <input class="txt_field" type="password" value="" placeholder="Password" id="password" required/>
-
-            <button value="Register">Submit</button>
+        <form class="login-form" action="" method="post">
+            {{form.hidden_tag()}}
+            {{form.username}}
+            {{form.password}}
+            {{form.submit}}
         </form>
       </div>
     </div>
