@@ -4,3 +4,6 @@ wtforms
 unidecode
 flask-login
 debug-sys
+fuzzywuzzy
+requests
+python-Levenshtein
