@@ -9,14 +9,15 @@ from wtforms import StringField, IntegerField, SubmitField
 import requests
 from unidecode import unidecode
 # personnal modulespython3 -m pip uninstall flask-wtf wtforms flask jinja2 click werkzeug markupsafe itsdangerouspip install Flask-WTF
-import pokedexmobile.search_engine as search_engine
+import pokedexmobile.utils.search_engine as search_engine
 
 search_engine.ECO = True
-import pokedexmobile.debug_sys as debug_sys
+from debug_sys import Logger
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 
 # =============================== INIT ZONE ===============================
+debug_sys = Logger()
 API_URL = "https://api-pokemon-fr.vercel.app/api/v1/pokemon"
 API_HEADER = {
     "User-Agent": "RobotPokemon",
