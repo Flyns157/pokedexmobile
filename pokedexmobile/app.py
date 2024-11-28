@@ -9,10 +9,10 @@ from wtforms import StringField, IntegerField, SubmitField
 import requests
 from unidecode import unidecode
 # personnal modulespython3 -m pip uninstall flask-wtf wtforms flask jinja2 click werkzeug markupsafe itsdangerouspip install Flask-WTF
-import search_engine
+import pokedexmobile.search_engine as search_engine
 
 search_engine.ECO = True
-import debug_sys
+import pokedexmobile.debug_sys as debug_sys
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 

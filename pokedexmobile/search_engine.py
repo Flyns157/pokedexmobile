@@ -2,7 +2,7 @@ __version__ = 2.64
 
 #=============================== IMPORTS ZONE ===============================
 import requests
-import debug_sys
+import pokedexmobile.debug_sys as debug_sys
 from fuzzywuzzy import fuzz
 
 
