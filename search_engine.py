@@ -2,16 +2,11 @@ __version__ = 2.64
 
 #=============================== IMPORTS ZONE ===============================
 import requests
-import debug_sys
+from debug_sys.logger import Logger
 from fuzzywuzzy import fuzz
 
-
-#=============================== CHECKING ZONE ===============================
-if debug_sys.__version__ != 2.2 :
-    raise Exception(f'Incorrect version of the "debug_sys" python library, the current version is {debug_sys.VERSION} but the expected version is 2.2.')
-
-
 #=============================== INIT ZONE ===============================
+debug_sys = Logger()
 API_URL = "https://api-pokemon-fr.vercel.app/api/v1/pokemon"
 API_HEADER = {
     "User-Agent": "RobotPokemon",
