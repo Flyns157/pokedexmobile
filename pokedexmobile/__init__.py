@@ -5,8 +5,7 @@ from flask import Flask, render_template, redirect, url_for, flash
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length, InputRequired, ValidationError
-from wtforms import StringField, IntegerField, SubmitField
-import requests
+from wtforms import StringField, SubmitField
 from unidecode import unidecode
 # personnal modulespython3 -m pip uninstall flask-wtf wtforms flask jinja2 click werkzeug markupsafe itsdangerouspip install Flask-WTF
 import pokedexmobile.utils.search_engine as search_engine
@@ -27,8 +26,8 @@ API_HEADER = {
 MAX_SUGGESTION = 6
 
 app = Flask(__name__, static_url_path='',
-            static_folder='static',
-            template_folder='templates')
+            static_folder='assets',
+            template_folder='views')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY'] = 'MSI c kro bien !'
 app.app_context().push()

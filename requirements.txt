@@ -1,0 +1,17 @@
+python-dotenv
+Flask
+Flask-SQLAlchemy
+Flask-WTF
+Flask-Login
+fuzzywuzzy
+python-Levenshtein
+requests
+unidecode
+debug_sys
+
+Flask-Bootstrap
+Flask-Bcrypt
+Flask-RESTful
+Flask-Mail
+Flask-Migrate
+Flask-Cors
