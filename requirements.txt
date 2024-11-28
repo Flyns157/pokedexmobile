@@ -1,0 +1,6 @@
+Flask
+Flask-WTF
+wtforms
+unidecode
+flask-login
+debug-sys
